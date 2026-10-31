@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>What changed and why</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width: 900px; height: 844px; box-sizing: border-box; padding: 40px 44px; background: #FFFFFF; color: #111111; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 20px">
+  <div style="display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-family: 'Bodoni Moda', serif; font-size: 34px; font-weight: 600">What changed and why</h1>
+    <p style="margin: 0; font-size: 15px; color: #4A4A4A">Six main problems in the current app, and how the new design fixes each one.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1fr) 150px; gap: 0; font-size: 13px; line-height: 1.45; border-top: 2px solid #111111">
+    <div style="padding: 10px 10px 10px 0; font-weight: 600; border-bottom: 1px solid #111111">Section</div>
+    <div style="padding: 10px; font-weight: 600; border-bottom: 1px solid #111111; display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 5px; background: #B42318"></span>Current app</div>
+    <div style="padding: 10px; font-weight: 600; border-bottom: 1px solid #111111; display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #14532D"></span>Redesign</div>
+    <div style="padding: 10px 0 10px 10px; font-weight: 600; border-bottom: 1px solid #111111">Nielsen heuristic</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Home &amp; menu</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">A small menu icon with no label. Users must guess where things are.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">A bottom tab bar with 5 labelled tabs. Category chips on the home page.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#6 Recognition, not recall</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Search &amp; list</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Search is hidden inside the menu. No suggestions. Names and prices are tiny.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Search is one tap away, with popular words. Clear prices, a price filter and sorting.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#7 Flexibility &amp; efficiency</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Product page</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Sizes appear only after tapping “Add”, in a pop-up. No size guide.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Sizes are visible at once, with a size guide. The button stays off until a size is chosen.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#5 Error prevention</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Bag &amp; checkout</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">A login wall first. “Guest” is a tiny link. 4 separate screens. Shipping cost comes late.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Guest checkout by default. One page with 3 clear steps and a full price summary.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#1 Visibility of system status</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Account &amp; help</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Help is a long page of small text. No chat or call button.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">Chat and Call buttons at the top. Short answers that open on tap.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#10 Help &amp; documentation</div>
+
+    <div style="padding: 12px 10px 12px 0; font-weight: 600; border-bottom: 1px solid #E6E2DC">Readability</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">8–11 px text, all capitals, light grey. Hard to read. Small tap areas.</div>
+    <div style="padding: 12px 10px; border-bottom: 1px solid #E6E2DC">13–17 px text, normal case, strong contrast. Tap areas of 44 px or more.</div>
+    <div style="padding: 12px 0 12px 10px; border-bottom: 1px solid #E6E2DC; color: #4A4A4A">#8 Aesthetic &amp; minimal design · WCAG AA</div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: auto">
+    <div style="padding: 16px; border-radius: 12px; background: #F6F4F1; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; font-weight: 600; color: #4A4A4A">TASK 1</span>
+      <span style="font-size: 14px; line-height: 1.45">Open Categories, find a blazer, choose size M and place the order.</span>
+    </div>
+    <div style="padding: 16px; border-radius: 12px; background: #F6F4F1; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; font-weight: 600; color: #4A4A4A">TASK 2</span>
+      <span style="font-size: 14px; line-height: 1.45">Search for “jeans”, open the product, add it and go to checkout.</span>
+    </div>
+    <div style="padding: 16px; border-radius: 12px; background: #F6F4F1; display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; font-weight: 600; color: #4A4A4A">MEASURE</span>
+      <span style="font-size: 14px; line-height: 1.45">Time per task, number of taps, errors, and a SUS score for each version.</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":900,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
