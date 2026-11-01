@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Zara app redesign: original vs enhanced</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed}
+a{color:#4ADE80}a:hover{color:#86EFAC}
+</style>
+</helmet>
+<div style="width: 1400px; height: 1160px; box-sizing: border-box; padding: 24px 40px 0; background: #0B0B0C; color: #F2F2F2; font-family: Inter, system-ui, sans-serif; display: flex; flex-direction: column; gap: 14px">
+
+<!-- HEADER -->
+<div style="display: flex; justify-content: space-between; align-items: center">
+  <div style="display: flex; align-items: center; gap: 16px">
+    <span style="font-family: 'Bodoni Moda', serif; font-size: 34px; font-weight: 700; letter-spacing: 1px">ZARA</span>
+    <span style="width: 1px; height: 36px; background: #333333"></span>
+    <div style="display: flex; flex-direction: column; gap: 3px">
+      <div style="display: flex; align-items: center; gap: 10px"><span style="font-size: 15px; font-weight: 700; letter-spacing: 0.4px">MOBILE APP UI/UX REDESIGN</span><span style="padding: 2px 8px; border-radius: 4px; background: #3A2E0B; color: #FACC15; font-size: 12px; font-weight: 700">Master BIS</span></div>
+      <span style="font-size: 13px; color: #A3A3A3">Interactive dual-screen prototype · Original vs. Enhanced · tap the right phone, the left phone follows</span>
+    </div>
+  </div>
+  <div style="display: flex; gap: 8px">
+    <span style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #1E3A8A; background: #0F1B3D; color: #93C5FD; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px">⇄ Mirror: ON</span>
+    <button onClick="{{toggleBadges}}" aria-pressed="{{badgesPressed}}" style="height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid #14532D; background: #052E16; color: #86EFAC; font-size: 13px; font-weight: 600">{{badgesLabel}}</button>
+  </div>
+</div>
+
+<!-- FLOW TABS -->
+<div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #222222">
+  <button onClick="{{prev}}" disabled="{{atFirst}}" style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #333333; background: #141414; color: #D4D4D4; font-size: 13px">‹ Prev</button>
+  <sc-for list="{{flowTabs}}" as="item" hint-placeholder-count="13">
+    <button onClick="{{item.go}}" aria-pressed="{{item.pressed}}" style="height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid {{item.bd}}; background: {{item.bg}}; color: {{item.fg}}; font-size: 13px; font-weight: 600">{{item.label}}</button>
+  </sc-for>
+  <button onClick="{{next}}" disabled="{{atLast}}" style="height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid #333333; background: #141414; color: #D4D4D4; font-size: 13px">Next ›</button>
+</div>
+
+<div style="display: flex; gap: 40px; align-items: flex-start">
+
+<!-- ====================== BEFORE PHONE ====================== -->
+<div style="width: 410px; flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px">
+  <div style="height: 28px; display: flex; align-items: center; justify-content: space-between; font-size: 12px">
+    <span style="display: flex; align-items: center; gap: 8px"><span style="padding: 4px 10px; border-radius: 14px; border: 1px solid #7F1D1D; background: #2A0D0D; color: #FCA5A5; font-weight: 700">● BEFORE · ORIGINAL</span><span style="color: #A3A3A3">iPhone 16 Pro</span></span>
+    <span style="font-family: 'IBM Plex Mono', monospace; color: #8A8A8A">Baseline</span>
+  </div>
+  <div style="width: 410px; height: 864px; box-sizing: border-box; padding: 10px; border-radius: 58px; background: #1C1C1E; box-shadow: 0 0 0 1px #2C2C2E">
+  <div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: {{bBg}}; color: {{bFg}}; font-family: 'IBM Plex Mono', monospace; display: flex; flex-direction: column">
+    <div style="height: 44px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; font-family: Inter, sans-serif; font-size: 14px; font-weight: 700; position: relative; z-index: 2"><span>10:41</span><span style="width: 110px; height: 30px; border-radius: 15px; background: #000000; position: absolute; left: 140px; top: 7px"></span><span style="font-size: 12px">▮▮▮ ◔ ▭</span></div>
+    <div style="flex: 1 1 auto; min-height: 0; position: relative; display: flex; flex-direction: column">
+
+<!-- B1 HOME -->
+<sc-if value="{{f.home}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; inset: -44px 0 0 0; background: #2A2F3A; display: flex; flex-direction: column; justify-content: space-between">
+  <div style="display: flex; justify-content: space-between; padding: 54px 18px 0; font-size: 10px; color: #FFFFFF"><span>MENU ≡</span><span>◯ VIEW 1</span></div>
+  <svg width="220" height="300" viewBox="0 0 24 24" fill="rgba(255,255,255,0.18)" aria-hidden="true" style="position: absolute; left: 85px; top: 170px"><circle cx="9" cy="4" r="1.8"/><path d="M6.5 7.5h5l1 7h-1.5l-.4 7.5h-3.2l-.4-7.5H5.5z"/><circle cx="16" cy="4.5" r="1.7"/><path d="M13.8 8h4.4l1 6.5h-1.4l-.4 7.5h-2.8l-.4-7.5h-1.4z"/></svg>
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 14px 22px; position: relative">
+    <div style="padding: 10px 12px; border: 1px solid #E5484D; background: rgba(120,20,30,0.45); color: #FFFFFF">
+      <div style="font-family: 'Bodoni Moda', serif; font-size: 34px; font-weight: 700; line-height: 1">TWILIGHT ROSES</div>
+      <div style="font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 9px; margin-top: 4px">PHOTOGRAPHS BY Steven Meisel<br>FILM BY Fabien Baron</div>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-family: 'Bodoni Moda', serif; font-size: 10px; letter-spacing: 1px; color: #FFFFFF; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.3)"><span>LOOKBOOK · WOMEN'S WINTER 2026</span><span>→</span></div>
+    <div style="display: flex; justify-content: space-between; font-size: 9px; color: #FFFFFF; padding-top: 6px"><span>CATALOG</span><span>◯ SEARCH</span><span>ACCOUNT</span><span>| 0 |</span></div>
+  </div>
+</div>
+</sc-if>
+
+<!-- B2 MENU -->
+<sc-if value="{{f.menu}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 8px 18px 0; font-size: 10px; gap: 12px">
+  <div style="display: flex; justify-content: space-between; color: #8A8A8A"><span>WOMAN <b style="color: #111111">MAN</b> KIDS</span><span style="font-size: 14px; color: #111111">✕</span></div>
+  <div style="border: 1px solid #F3A9AB; background: #FFF5F5; padding: 8px 10px; display: flex; flex-direction: column; gap: 7px">
+    <span style="color: #D92D20; font-size: 9px">[07] SPECIAL EDITION - RE:FORM ZARA</span>
+    <span>HALLOWEEN</span><span>THE ITEM</span><span style="color: #D92D20">BAISI GUADAGNINO X ZARA</span><span>FRUIT OF THE LOOM™ X ZARA</span><span>0FR. PARIS AND ZARA</span><span>SCARVES EDIT</span><span>SRPLS FLWRS</span><span>THE HOUSE OF MARISA</span><span>CARAMEL LONDON X ZARA</span>
+  </div>
+  <div style="border: 1px solid #F3A9AB; background: #FFF5F5; padding: 8px 10px; display: flex; flex-direction: column; gap: 7px">
+    <span style="color: #D92D20; font-size: 9px">[08] THE FOLD-ER</span>
+    <span>VIEW ALL</span><b>MARIANNE SMYTH</b><b>SOPHIA GEISS</b><b>YATEEN ADIM</b><b>VERONIKA HEILBRUNNER</b><b>MARIE VON BEHRENS</b><b>LILLY SISTO</b><b>LARISSA MILLS</b>
+  </div>
+  <div style="margin-top: auto; display: flex; justify-content: space-between; padding: 12px 0 26px; border-top: 1px solid #E5E5E5; font-size: 9px"><b>CATALOG</b><span>ACCOUNT</span><span>| 0 |</span></div>
+</div>
+</sc-if>
+
+<!-- B3 LOOKBOOK -->
+<sc-if value="{{f.lookbook}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 12px 0; font-size: 10px; gap: 10px">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: -30px; position: relative; z-index: 3"><span style="font-size: 14px">←</span><span style="padding: 6px 14px; background: #D92D20; color: #FFFFFF; font-weight: 600">- SECONDHAND -</span><span style="color: #8A8A8A">VIEW 1</span></div>
+  <div style="border: 1px solid #F3A9AB; padding: 8px; display: flex; flex-direction: column; gap: 8px; margin-top: 18px">
+    <span style="color: #D92D20; font-size: 9px; text-align: center">⚠ BLIND BROWSING: NO NAMES, NO PRICES, NO COLOURS</span>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px">
+      <div style="height: 170px; background: #8E8577"></div><div style="height: 170px; background: #A8957C"></div>
+      <div style="height: 170px; background: #2F5D4A"></div><div style="height: 170px; background: #3A3A3C"></div>
+    </div>
+  </div>
+  <div style="margin-top: auto; display: flex; justify-content: space-between; padding: 12px 6px 26px; border-top: 1px solid #E5E5E5; font-size: 9px"><span>CATALOG</span><span>ACCOUNT</span><span>| 0 |</span></div>
+</div>
+</sc-if>
+
+<!-- B4 SEARCH TYPING -->
+<sc-if value="{{f.search_typing}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 14px 0; font-size: 10px; gap: 10px">
+  <div style="display: flex; justify-content: space-between; color: #A3A3A3"><span>CANCEL</span><span style="font-size: 9px">ORIGINAL SEARCH</span></div>
+  <div style="display: flex; gap: 16px; font-weight: 600"><span style="border-bottom: 1px solid #FFFFFF">WOMAN</span><span style="color: #A3A3A3">MAN</span><span style="color: #A3A3A3">KIDS</span></div>
+  <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #444444; font-size: 13px"><span>bead</span><span>✕</span></div>
+  <div style="border: 1px solid #E5484D; background: #2A0D0D; padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; position: relative">
+    <span style="color: #FCA5A5; font-size: 9px">⚠ OVERLAPPING AUTOCOMPLETE COLLISION</span>
+    <span>BEAD</span><span>BEAD TOP</span>
+    <span style="position: relative">YOU MIGHT BE IN<span style="position: absolute; left: 70px; top: -3px; font-size: 13px; font-weight: 700">BEAD BAG</span></span>
+    <span style="color: #8A8A8A; padding-left: 90px">ED DRESS</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+    <div style="background: #1C1C1E; padding: 6px"><div style="height: 70px; background: #8B857B"></div><div style="font-size: 8px; margin-top: 5px">RELAXED FIT HIGH NECK…</div><div style="font-size: 8px; color: #A3A3A3">$129.00</div></div>
+    <div style="background: #1C1C1E; padding: 6px"><div style="height: 70px; background: #2B2B2B"></div><div style="font-size: 8px; margin-top: 5px">LEATHER EFFECT JACKET</div><div style="font-size: 8px; color: #A3A3A3">$119.00</div></div>
+  </div>
+  <div style="margin-top: auto; margin-left: -14px; margin-right: -14px; background: #2C2C2E; padding: 8px 6px 26px; display: flex; flex-direction: column; gap: 6px; font-family: Inter, sans-serif">
+    <div style="display: flex; justify-content: space-around; color: #D4D4D4; font-size: 12px"><span>"bead"</span><span>beadwear</span><span>beaded</span></div>
+    <div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px"><sc-for list="{{keys1}}" as="item" hint-placeholder-count="10"><span style="height: 30px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">{{item}}</span></sc-for></div>
+    <div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; padding: 0 12px"><sc-for list="{{keys2}}" as="item" hint-placeholder-count="9"><span style="height: 30px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">{{item}}</span></sc-for></div>
+    <div style="display: flex; gap: 4px"><span style="flex: 0 0 50px; height: 32px; border-radius: 5px; background: #3A3A3C; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #FFFFFF">123</span><span style="flex: 1 1 auto; height: 32px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">space</span><span style="flex: 0 0 80px; height: 32px; border-radius: 5px; background: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">Search</span></div>
+  </div>
+</div>
+</sc-if>
+
+<!-- B5 SEARCH RESULTS -->
+<sc-if value="{{f.search_results}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 14px 0; font-size: 10px; gap: 10px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 14px">←</span><span style="padding: 5px 10px; border: 1px solid #444444; border-radius: 12px; font-size: 9px">VIEW 1 | FILTERS</span></div>
+  <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #444444; font-weight: 600"><span>BEAD</span><span>✕</span></div>
+  <div style="display: flex; gap: 16px; font-weight: 600"><span style="border-bottom: 1px solid #FFFFFF">WOMAN</span><span style="color: #A3A3A3">MAN</span><span style="color: #A3A3A3">KIDS</span><span style="color: #A3A3A3">SALE %</span></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <div style="border: 1px solid #E5484D; padding: 6px; position: relative"><span style="position: absolute; top: 8px; left: 8px; padding: 2px 5px; background: #D92D20; color: #FFFFFF; font-size: 7px">UNRELATED TOP RESULT</span><div style="height: 150px; background: #F2F2F2"></div><div style="font-size: 8px; margin-top: 6px; font-weight: 600">EMBROIDERED LINEN TOP</div><div style="font-size: 8px; color: #A3A3A3">$65.00</div></div>
+    <div style="padding: 6px"><div style="height: 150px; background: #EDEDED"></div><div style="font-size: 8px; margin-top: 6px; font-weight: 600">BEADED BANDEAU DRESS</div><div style="font-size: 8px; color: #A3A3A3">$89.00</div></div>
+    <div style="padding: 6px"><div style="height: 150px; background: #D9D9D6"></div><div style="font-size: 8px; margin-top: 6px; font-weight: 600">BEADED SHOULDER BAG</div><div style="font-size: 8px; color: #A3A3A3">$139.00</div></div>
+  </div>
+  <div style="margin-top: auto; display: flex; justify-content: space-between; padding: 12px 6px 26px; border-top: 1px solid #333333; font-size: 9px"><span>CATALOG</span><span>ACCOUNT</span><span>| 0 |</span></div>
+</div>
+</sc-if>
+
+<!-- B6 FILTER -->
+<sc-if value="{{f.filter}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 14px 0; font-size: 10px; gap: 9px">
+  <div style="display: flex; justify-content: space-between; color: #D4D4D4; font-size: 9px"><span style="font-size: 14px">←</span><span>VIEW 2 &#160; FILTERS &#160; IN STORE</span></div>
+  <div style="border: 1px solid #E5484D; background: #2A0D0D; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px"><span style="color: #FCA5A5; font-size: 9px">⚠ ALL SECTIONS PERMANENTLY EXPANDED (LONG SCROLL)</span><span style="font-size: 9px; color: #D4D4D4">No active summary chips. Selected options only indicated by subtle bold text.</span></div>
+  <span style="color: #8A8A8A">|01| SORT BY</span>
+  <span style="padding-left: 10px; font-weight: 600">RELEVANCE / NEW ✓</span><span style="padding-left: 10px; color: #A3A3A3">ASCENDING PRICE</span><span style="padding-left: 10px; color: #A3A3A3">DESCENDING PRICE</span>
+  <span style="color: #8A8A8A">|02| CATEGORIES</span>
+  <span style="padding-left: 10px; color: #A3A3A3">COATS &amp; JACKETS</span><span style="padding-left: 10px; color: #A3A3A3">BLAZERS &amp; SUITS</span><span style="padding-left: 10px; color: #A3A3A3">TOPS &amp; KNITWEAR</span><span style="padding-left: 10px; color: #A3A3A3">DRESSES &amp; SKIRTS</span><span style="padding-left: 10px; color: #A3A3A3">TROUSERS &amp; JEANS</span><span style="padding-left: 10px; color: #A3A3A3">BAGS &amp; SHOES</span>
+  <span style="color: #8A8A8A">|03| COLOUR</span>
+  <span style="padding-left: 10px; color: #A3A3A3">■ BLACK</span><span style="padding-left: 10px; color: #A3A3A3">□ WHITE / ECRU</span><span style="padding-left: 10px; color: #A3A3A3">■ CAMEL / BROWN</span>
+  <div style="margin-top: auto; padding: 12px 0 26px; border-top: 1px solid #333333; display: flex; flex-direction: column; gap: 8px; align-items: center"><span style="width: 100%; height: 40px; border: 1px solid #D4D4D4; display: flex; align-items: center; justify-content: center; font-weight: 600">VIEW RESULTS</span><span style="font-size: 8px; color: #8A8A8A">CLEAR FILTERS</span></div>
+</div>
+</sc-if>
+
+<!-- B7 PDP -->
+<sc-if value="{{f.pdp}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; font-size: 10px">
+  <div style="display: flex; justify-content: space-between; padding: 6px 16px 10px; font-size: 13px"><span>✕</span><span style="display: flex; gap: 16px; font-size: 11px">⌑ &#160;⇪ &#160;|0|</span></div>
+  <div style="height: 330px; background: #7E776D; display: flex; align-items: center; justify-content: center; position: relative">
+    <svg width="160" height="250" viewBox="0 0 24 24" fill="rgba(255,255,255,0.22)" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M8.5 7.5h7l1.5 9h-2l-.5 6h-5l-.5-6h-2z"/></svg>
+    <span style="position: absolute; left: 12px; bottom: 12px; width: 18px; height: 18px; background: #FFFFFF; color: #111111; font-size: 9px; display: flex; align-items: center; justify-content: center">⛶</span>
+  </div>
+  <div style="padding: 12px 16px 0; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; align-items: center"><span>RELAXED FIT HIGH NECK COAT</span><span style="display: flex; gap: 4px"><span style="width: 12px; height: 12px; border-radius: 6px; background: #8B857B; outline: 1px solid #111111"></span><span style="width: 12px; height: 12px; border-radius: 6px; background: #111111"></span><span style="width: 12px; height: 12px; border-radius: 6px; background: #1B2838"></span></span></div>
+    <span style="font-size: 11px">$129.00</span>
+    <span style="font-size: 8px; color: #8A8A8A">COLOR: TAUPE GREY</span>
+    <span style="height: 30px; border: 1px solid #111111; display: flex; align-items: center; justify-content: center; margin-top: 8px">ADD</span>
+    <span style="font-size: 8px; color: #D92D20; text-align: center">⚠ Sizes hidden inside popup sheet after tapping ADD</span>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; margin-top: 8px"><span style="height: 46px; background: #7E776D"></span><span style="height: 46px; background: #857E73"></span><span style="height: 46px; background: #7A7369"></span><span style="height: 46px; background: #8B857B"></span><span style="height: 46px; background: #77706A"></span><span style="height: 46px; background: #827B71"></span></div>
+  </div>
+</div>
+</sc-if>
+
+<!-- B8 BAG -->
+<sc-if value="{{f.bag}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 16px 0; font-size: 10px; gap: 12px">
+  <div style="display: flex; justify-content: space-between; font-size: 13px"><span>✕</span><span>▭</span></div>
+  <div style="display: flex; gap: 20px; font-size: 9px"><b style="border-bottom: 1px solid #111111; padding-bottom: 4px">SHOPPING BAG | 1 |</b><span style="color: #8A8A8A">FAVOURITES</span></div>
+  <div style="display: flex; gap: 12px">
+    <div style="width: 70px; height: 92px; background: #EFEFEF; display: flex; align-items: center; justify-content: center"><div style="width: 44px; height: 54px; background: #1C1C1C"></div></div>
+    <div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><b>LEATHER EFFECT JACKET</b><span style="color: #555555">M | BLACK</span><span>$119.00</span>
+      <span style="border: 1px solid #F3A9AB; background: #FFF5F5; color: #D92D20; font-size: 8px; padding: 5px">⚠ Cannot edit size here! (Requires 5 steps: Delete → Search → PDP → Pick Size → Re-add)</span>
+      <div style="display: flex; justify-content: space-between; font-size: 9px; color: #555555"><span>− 1 +</span><span>DELETE | ⌑</span></div>
+    </div>
+  </div>
+  <span style="font-size: 8px; color: #8A8A8A; padding-top: 10px; border-top: 1px solid #E5E5E5">YOU MAY ALSO LIKE</span>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; font-size: 8px">
+    <div style="border: 1px solid #E5E5E5; padding: 5px"><div style="height: 56px; background: #B2875B"></div><div style="margin-top: 4px">Faux Trench</div><div style="color: #8A8A8A">$89.00</div></div>
+    <div style="border: 1px solid #E5E5E5; padding: 5px"><div style="height: 56px; background: #E9E4D8"></div><div style="margin-top: 4px">Knit Cardigan</div><div style="color: #8A8A8A">$59.00</div></div>
+    <div style="border: 1px solid #E5E5E5; padding: 5px"><div style="height: 56px; background: #1E2838"></div><div style="margin-top: 4px">Pleated Skirt</div><div style="color: #8A8A8A">$89.00</div></div>
+  </div>
+  <div style="margin-top: auto; padding: 12px 0 26px; border-top: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between"><b>TOTAL</b><b>$119.00</b></div><span style="font-size: 8px; color: #8A8A8A; text-align: right">* VAT included</span><span style="height: 40px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 600">CONTINUE (1)</span></div>
+</div>
+</sc-if>
+
+<!-- B9 CHECKOUT -->
+<sc-if value="{{f.checkout}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 16px 0; font-size: 10px; gap: 10px">
+  <span style="font-size: 14px">←</span>
+  <span style="border: 1px solid #F3A9AB; background: #FFF5F5; color: #D92D20; font-size: 9px; padding: 8px">⚠ No progress stepper, bare unlabelled back arrow, mixed serif/sans fonts.</span>
+  <span style="font-family: 'Bodoni Moda', serif; font-size: 12px; font-weight: 600">REVIEW AND CONFIRM ORDER</span>
+  <span style="font-size: 9px; color: #555555">1 DELIVERY</span>
+  <div style="border: 1px solid #E5E5E5; padding: 8px; display: flex; gap: 10px; align-items: center"><span style="width: 36px; height: 44px; background: #1C1C1C"></span><span style="display: flex; flex-direction: column; gap: 3px; font-size: 9px"><span>LEATHER EFFECT JACKET</span><span style="color: #8A8A8A">SIZE M · BLACK</span></span></div>
+  <div style="padding: 8px 0; border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between"><span style="display: flex; flex-direction: column; gap: 3px"><span style="font-family: 'Bodoni Moda', serif; font-size: 11px; font-weight: 600">SHIPPING METHOD</span><span style="font-size: 9px; color: #555555">Home Delivery · Ho Chi Minh City</span></span><span>›</span></div>
+  <div style="padding: 8px 0; border-bottom: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 3px"><span style="display: flex; justify-content: space-between"><span style="font-family: 'Bodoni Moda', serif; font-size: 11px; font-weight: 600">DELIVERY DATE</span><span style="font-size: 8px; color: #15803D">FREE</span></span><span style="font-size: 9px">THURSDAY 29</span><span style="font-size: 8px; color: #8A8A8A">Free shipping for orders over $50.00 applies only for full price items</span></div>
+  <div style="padding: 8px 0; display: flex; justify-content: space-between"><span style="display: flex; flex-direction: column; gap: 3px"><span style="font-family: 'Bodoni Moda', serif; font-size: 11px; font-weight: 600">PAYMENT METHOD</span><span style="font-size: 9px; color: #555555">OnlineBanking</span></span><span>›</span></div>
+  <div style="margin-top: auto; padding: 12px 0 26px; border-top: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between"><b>TOTAL</b><b>$119.00</b></div><span style="height: 40px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 600">AUTHORISE PAYMENT</span></div>
+</div>
+</sc-if>
+
+<!-- B10 PAYMENT -->
+<sc-if value="{{f.payment_result}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 16px 0; font-size: 10px; gap: 12px">
+  <span style="font-size: 14px">✕</span>
+  <div style="border: 1px dashed #E5484D; background: #FFF5F5; padding: 10px; text-align: center; display: flex; flex-direction: column; gap: 6px"><b style="color: #D92D20; font-size: 11px">THANK YOU FOR SHOPPING AT ZARA</b><span style="color: #D92D20; font-size: 8px">⚠ Bank page reported: "Customer Cancellation", but app says "Thank you" and gives order number! Users cannot tell if they paid or not.</span></div>
+  <span style="font-size: 9px; color: #555555">1 DELIVERY</span>
+  <div style="border: 1px solid #E5E5E5; padding: 8px; display: flex; gap: 10px; align-items: center"><span style="width: 36px; height: 44px; background: #1C1C1C"></span><span style="display: flex; flex-direction: column; gap: 3px; font-size: 9px"><span>LEATHER EFFECT JACKET</span><span style="color: #8A8A8A">$119.00</span></span></div>
+  <span style="background: #F2F2F2; padding: 10px; font-family: Inter, sans-serif; font-size: 9px; color: #555555">Notifications are disabled. Remember, if you do not enable them we will not be able to send you updates on the order status.</span>
+  <span style="font-size: 8px; color: #8A8A8A">ESTIMATED DELIVERY DATE</span><b style="font-size: 10px">Thursday 29, October</b>
+  <div style="margin-top: auto; padding: 12px 0 26px"><span style="height: 40px; background: #111111; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 600">BACK TO HOME</span></div>
+</div>
+</sc-if>
+
+<!-- B11 COOKIE -->
+<sc-if value="{{f.cookie}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 30px 22px 0; font-size: 10px; gap: 12px">
+  <b style="font-size: 11px; letter-spacing: 0.5px">USE OF COOKIES</b>
+  <span style="font-family: Inter, sans-serif; font-size: 10px; line-height: 1.55; color: #D4D4D4">We respect your operative system's privacy settings. When in line with them, we will use first-party and third-party cookies to understand the uses of our online store and to be able to improve it, adapt the content to your preferences and personalize our advertisements, marketing and publications on social networks.</span>
+  <span style="font-size: 8px; color: #8A8A8A; text-decoration: underline">Cookies Policy</span>
+  <div style="margin: auto 0 30px; border: 1px dashed #E5484D; padding: 12px; display: flex; flex-direction: column; gap: 10px"><span style="color: #FCA5A5; font-size: 8px; text-align: center">✕ ONLY 1 BUTTON ("CONTINUE") — NO WAY TO REJECT!</span><span style="height: 38px; border: 1px solid #D4D4D4; display: flex; align-items: center; justify-content: center; font-weight: 600">CONTINUE</span></div>
+</div>
+</sc-if>
+
+<!-- B12 ACCOUNT -->
+<sc-if value="{{f.account}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; font-size: 10px">
+  <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: #2C2C2E; font-family: Inter, sans-serif; font-size: 11px"><span>Cancel</span><b>account.zara.com</b><span>↻</span></div>
+  <div style="flex: 1 1 auto; padding: 24px 16px 0; display: flex; flex-direction: column; gap: 14px">
+    <span style="font-family: 'Bodoni Moda', serif; font-size: 34px; font-weight: 700; text-align: center">ZARA</span>
+    <div style="border: 1px dashed #E5484D; background: #1F0B0B; padding: 12px; display: flex; flex-direction: column; gap: 10px"><span style="color: #FCA5A5; font-size: 9px">LOG IN OR REGISTER</span><span style="font-size: 8px; color: #8A8A8A; border-bottom: 1px solid #555555; padding-bottom: 6px">EMAIL</span><span style="color: #FCA5A5; font-size: 8px">⚠ Am I logging in or registering? No hints, no syntax validation checkmark!</span><span style="height: 36px; border: 1px solid #D4D4D4; display: flex; align-items: center; justify-content: center; font-weight: 600">CONTINUE</span></div>
+    <span style="font-size: 8px; color: #8A8A8A; text-align: center">ACCESS WITH</span>
+    <span style="height: 36px; border: 1px solid #555555; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif">CONTINUE WITH APPLE</span>
+    <span style="height: 36px; border: 1px solid #555555; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif">CONTINUE WITH GOOGLE</span>
+    <div style="margin-top: auto; display: flex; justify-content: space-between; padding: 12px 0 26px; border-top: 1px solid #333333; font-size: 9px"><span>CATALOG</span><b>ACCOUNT</b><span>| 0 |</span></div>
+  </div>
+</div>
+</sc-if>
+
+<!-- B13 RETURNS -->
+<sc-if value="{{f.returns}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; padding: 6px 16px 0; font-size: 10px; gap: 12px">
+  <div style="display: flex; justify-content: space-between"><span style="font-size: 14px">←</span><b>RETURNS</b><span style="font-size: 8px; color: #8A8A8A">HELP · SETTINGS</span></div>
+  <div style="border: 1px solid #E5484D; background: #1F0B0B; padding: 12px; display: flex; flex-direction: column; gap: 10px; text-align: center"><span style="color: #FCA5A5; font-size: 8px">✕ STATIC DEAD-END (NO TIMELINE, NO STEPPER, NO STORE MAP)</span><b style="font-size: 11px">THERE ARE NO ACTIVE RETURNS AT THIS TIME.</b><span style="font-family: Inter, sans-serif; font-size: 9px; color: #8A8A8A">User is stranded with no deadline guidance or drop-off location.</span></div>
+  <span style="color: #FCA5A5; font-size: 8px; padding-top: 10px; border-top: 1px solid #333333">⚠ ROWS &lt; 32PX CAUSE MIS-TAPS:</span>
+  <span>|01| PURCHASES</span><b>|02| RETURNS</b><span>|03| FAVOURITES</span><span>|04| MY DETAILS</span><span>|05| STORES</span>
+  <div style="margin-top: auto; padding: 12px 0 26px"><span style="height: 40px; border: 1px solid #444444; color: #8A8A8A; display: flex; align-items: center; justify-content: center">PROCESS RETURN</span></div>
+</div>
+</sc-if>
+
+      <sc-if value="{{showBadges}}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{bBadges}}" as="item" hint-placeholder-count="2">
+          <span aria-hidden="true" style="position: absolute; left: {{item.x}}%; top: {{item.y}}%; z-index: 5; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 12px; background: #E5484D; color: #FFFFFF; border: 2px solid #FFFFFF; font-family: Inter, sans-serif; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.4)">{{item.n}}</span>
+        </sc-for>
+      </sc-if>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ====================== CENTER: NOTES ====================== -->
+<div style="width: 420px; flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px">
+  <div style="height: 28px; display: flex; align-items: center; font-size: 12px; font-weight: 700; color: #A3A3A3; letter-spacing: 0.6px">WHAT CHANGED · WHY</div>
+  <div style="height: 864px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+    <div style="padding: 16px 18px; border-radius: 14px; background: #141414; border: 1px solid #262626; display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #A3A3A3">{{part}} · {{tag}}</span>
+      <span style="font-size: 22px; font-weight: 700">{{flowName}}</span>
+      <span style="font-size: 13px; color: #A3A3A3">Numbers match the red (before) and green (after) badges on the phones.</span>
+    </div>
+    <div style="flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 10px">
+      <sc-for list="{{notes}}" as="item" hint-placeholder-count="2">
+        <div style="padding: 14px 16px; border-radius: 14px; background: #141414; border: 1px solid #262626; display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; gap: 10px; align-items: flex-start">
+            <span style="width: 26px; height: 26px; flex: 0 0 auto; border-radius: 13px; background: #16A34A; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{item.n}}</span>
+            <span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 15px; font-weight: 700; line-height: 1.3">{{item.title}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #A3A3A3; line-height: 1.4">{{item.heuristic}}</span></span>
+          </div>
+          <div style="padding: 10px 12px; border-radius: 10px; background: #1F0B0B; border: 1px solid #4C1717; font-size: 13px; line-height: 1.5; color: #FECACA"><b style="color: #FCA5A5">Before:</b> {{item.problem}}</div>
+          <div style="padding: 10px 12px; border-radius: 10px; background: #052E16; border: 1px solid #14532D; font-size: 13px; line-height: 1.5; color: #BBF7D0"><b style="color: #86EFAC">After:</b> {{item.solution}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<!-- ====================== AFTER PHONE ====================== -->
+<div style="width: 410px; flex: 0 0 auto; display: flex; flex-direction: column; gap: 8px">
+  <div style="height: 28px; display: flex; align-items: center; justify-content: space-between; font-size: 12px">
+    <span style="display: flex; align-items: center; gap: 8px"><span style="padding: 4px 10px; border-radius: 14px; border: 1px solid #14532D; background: #052E16; color: #86EFAC; font-weight: 700">✦ AFTER · ENHANCED</span><span style="color: #A3A3A3">iPhone 16 Pro · tap here</span></span>
+    <span style="font-family: 'IBM Plex Mono', monospace; color: #8A8A8A">Report 2 Fix</span>
+  </div>
+  <div style="width: 410px; height: 864px; box-sizing: border-box; padding: 10px; border-radius: 58px; background: #1C1C1E; box-shadow: 0 0 0 1px #2C2C2E">
+  <div style="position: relative; width: 390px; height: 844px; border-radius: 48px; overflow: hidden; background: {{aBg}}; color: {{aFg}}; display: flex; flex-direction: column">
+    <div style="height: 44px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; font-size: 14px; font-weight: 700; position: relative; z-index: 2"><span>10:41</span><span style="width: 110px; height: 30px; border-radius: 15px; background: #000000; position: absolute; left: 140px; top: 7px"></span><span style="font-size: 12px">▮▮▮ ◔ ▭</span></div>
+    <div style="flex: 1 1 auto; min-height: 0; position: relative; display: flex; flex-direction: column">
+      <div style="flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column">
+
+<!-- A1 HOME -->
+<sc-if value="{{f.home}}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; inset: -44px 0 0 0; background: {{dept.tone}}; display: flex; flex-direction: column; justify-content: space-between">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 56px 18px 0; color: #FFFFFF"><span style="font-family: 'Bodoni Moda', serif; font-size: 30px; font-weight: 700">ZARA</span><button aria-label="Change grid view" style="width: 44px; height: 44px; border: 0; background: none; color: #FFFFFF; font-size: 20px">⊞</button></div>
+  <svg width="220" height="300" viewBox="0 0 24 24" fill="rgba(255,255,255,0.18)" aria-hidden="true" style="position: absolute; left: 85px; top: 170px"><circle cx="9" cy="4" r="1.8"/><path d="M6.5 7.5h5l1 7h-1.5l-.4 7.5h-3.2l-.4-7.5H5.5z"/><circle cx="16" cy="4.5" r="1.7"/><path d="M13.8 8h4.4l1 6.5h-1.4l-.4 7.5h-2.8l-.4-7.5h-1.4z"/></svg>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0 0 0; position: relative; color: #FFFFFF">
+    <span style="padding: 4px 10px; border-radius: 12px; background: rgba(0,0,0,0.45); font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px">{{dept.collection}}</span>
+    <span style="font-family: 'Bodoni Moda', serif; font-size: 28px; letter-spacing: 3px">{{dept.title}}</span>
+    <button onClick="{{goLookbook}}" style="height: 32px; border: 0; background: none; color: #FACC15; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px">{{dept.status}} →</button>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; margin: 4px 14px 0; border-radius: 24px; background: rgba(20,20,20,0.6); width: 340px; box-sizing: border-box">
+      <sc-for list="{{depts}}" as="item" hint-placeholder-count="4">
+        <button onClick="{{item.pick}}" aria-pressed="{{item.pressed}}" style="height: 40px; border: 0; border-radius: 20px; background: {{item.bg}}; color: {{item.fg}}; font-size: 13px; font-weight: 700">{{item.label}}</button>
+      </sc-for>
+    </div>
+    <span style="font-size: 11px; color: #E5E5E5; padding-bottom: 6px">Tap to switch department · tap again to browse {{dept.label}}</span>
+  </div>
+  <div style="height: 82px"></div>
+</div>
+</sc-if>
+
+<!-- A2 MENU -->
+<sc-if value="{{f.menu}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 4px 16px 16px; font-size: 13px">
+  <div style="display: flex; gap: 22px; border-bottom: 1px solid #E5E5E5; font-family: 'IBM Plex Mono', monospace; font-size: 12px"><b style="padding: 8px 0; border-bottom: 2px solid #111111">WOMAN</b><span style="padding: 8px 0; color: #6B6B6B">MAN</span><span style="padding: 8px 0; color: #6B6B6B">KIDS</span><span style="padding: 8px 0; color: #6B6B6B">SALE %</span></div>
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6B6B6B">[01] NEW ARRIVALS</span>
+  <div style="display: flex; justify-content: space-between; font-weight: 600"><span>STUDIO COLLECTION</span><span style="font-size: 10px; color: #6B6B6B">NEW</span></div>
+  <span style="font-weight: 600">THE NEW</span>
+  <div style="border: 1.5px solid #4ADE80; background: #F0FDF4; border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6B6B6B">[02] CLOTHING</span><span style="padding: 2px 6px; border-radius: 4px; background: #DCFCE7; color: #15803D; font-size: 9px; font-weight: 700">PRIMARY TAXONOMY</span></div>
+    <sc-for list="{{menuCats}}" as="item" hint-placeholder-count="7">
+      <button onClick="{{goLookbook}}" style="height: 38px; display: flex; justify-content: space-between; align-items: center; border: 0; background: none; padding: 0; font-size: 13px; font-weight: 600; text-align: left"><span>{{item.label}}</span><span style="font-size: 10px; font-weight: 400; color: #6B6B6B">{{item.sub}}</span></button>
+    </sc-for>
+  </div>
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6B6B6B">[03] ACCESSORIES</span>
+  <div style="display: flex; justify-content: space-between; font-weight: 600"><span>SHOES &amp; LEATHER</span><span style="font-size: 11px; color: #6B6B6B">(64)</span></div>
+  <div style="display: flex; justify-content: space-between; font-weight: 600"><span>BAGS &amp; BACKPACKS</span><span style="font-size: 11px; color: #6B6B6B">(38)</span></div>
+  <button onClick="{{toggleEdits}}" aria-expanded="{{editsExpanded}}" style="border: 1px solid #D4D4D4; border-radius: 10px; background: #FAFAFA; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; text-align: left">
+    <span style="display: flex; flex-direction: column; gap: 2px"><b style="font-size: 12px">[04] SPECIAL EDITIONS &amp; INFLUENCER EDITS</b><span style="font-size: 11px; color: #6B6B6B">Marianne Smyth, Isis Maria, Baisi Guadagnino…</span></span><span>{{editsChev}}</span>
+  </button>
+  <sc-if value="{{edits}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 6px; padding: 0 12px; font-size: 12px; color: #3D3D3D"><span>Marianne Smyth</span><span>Sophia Geiss</span><span>Isis Maria</span><span>Baisi Guadagnino x Zara</span><span>SRPLS FLWRS</span></div>
+  </sc-if>
+</div>
+</sc-if>
+
+<!-- A3 LOOKBOOK -->
+<sc-if value="{{f.lookbook}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 4px 14px 16px">
+  <span style="font-size: 11px; color: #6B6B6B">Home › {{dept.label}} › Lookbook › <b style="color: #111111">Outerwear</b></span>
+  <div style="display: flex; justify-content: space-between; align-items: center"><b style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">WINTER LOOKBOOK 2026</b><span style="display: flex; gap: 8px; align-items: center"><button onClick="{{goFilter}}" style="height: 34px; padding: 0 10px; border: 1px solid #D4D4D4; border-radius: 6px; background: #FFFFFF; font-size: 12px">☰ Filters (2)</button><span style="font-size: 16px">⊞</span></span></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px">
+    <sc-for list="{{lookCards}}" as="item" hint-placeholder-count="4">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <div style="position: relative">
+          <button onClick="{{goPdp}}" aria-label="Open {{item.name}}" style="width: 100%; height: 200px; border: 0; padding: 0; background: {{item.tone}}; display: flex; align-items: center; justify-content: center"><svg width="80" height="140" viewBox="0 0 24 24" fill="rgba(255,255,255,0.28)" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M8.5 7.5h7l1.5 9h-2l-.5 6h-5l-.5-6h-2z"/></svg></button>
+          <button onClick="{{quickAdd}}" aria-label="Quick add {{item.name}}" style="position: absolute; right: 6px; bottom: 6px; width: 34px; height: 34px; border: 0; border-radius: 17px; background: #FFFFFF; font-size: 18px">+</button>
+        </div>
+        <b style="font-family: 'IBM Plex Mono', monospace; font-size: 10px">{{item.name}}</b>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px">{{item.price}}</span>
+        <span style="display: flex; gap: 4px"><span style="width: 10px; height: 10px; border-radius: 5px; background: {{item.c1}}; outline: 1px solid #D4D4D4"></span><span style="width: 10px; height: 10px; border-radius: 5px; background: {{item.c2}}"></span></span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- A4 SEARCH TYPING -->
+<sc-if value="{{f.search_typing}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding: 4px 14px 0">
+  <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #A3A3A3"><button onClick="{{goHome}}" style="height: 30px; border: 0; background: none; padding: 0; color: #A3A3A3; font-size: 11px">CANCEL</button><span style="align-self: center">SEARCH · {{dept.label}}</span></div>
+  <div style="display: flex; gap: 18px; font-size: 13px; font-weight: 700"><span style="border-bottom: 2px solid #FFFFFF; padding-bottom: 4px">WOMAN</span><span style="color: #8A8A8A">MAN</span><span style="color: #8A8A8A">KIDS</span><span style="color: #8A8A8A">SALE %</span></div>
+  <div style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid #555555; background: #1C1C1E">
+    <span style="color: #A3A3A3">⌕</span>
+    <label for="aq" style="position: absolute; left: -9999px">Search</label>
+    <input id="aq" value="{{query}}" onChange="{{typeQuery}}" style="flex: 1 1 auto; min-width: 0; height: 40px; border: 0; outline: none; background: transparent; color: #FFFFFF; font-size: 15px">
+    <button onClick="{{clearQuery}}" aria-label="Clear" style="width: 32px; height: 32px; border: 0; background: none; color: #A3A3A3">✕</button>
+  </div>
+  <div style="display: flex; flex-direction: column">
+    <sc-for list="{{suggest}}" as="item" hint-placeholder-count="4">
+      <button onClick="{{goResults}}" style="height: 36px; display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; color: #E5E5E5; font-size: 14px; text-align: left"><span style="color: #8A8A8A">⌕</span>{{item}}</button>
+    </sc-for>
+  </div>
+  <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3; padding-top: 8px; border-top: 1px solid #2C2C2E"><span>SUGGESTED FOR YOU ({{dept.label}})</span><span style="color: #FACC15">View all →</span></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+    <button onClick="{{goPdp}}" style="border: 1px solid #2C2C2E; border-radius: 8px; background: #141414; padding: 6px; text-align: left; color: #FFFFFF"><div style="height: 80px; background: #8B857B; border-radius: 4px"></div><div style="font-size: 10px; font-weight: 700; margin-top: 5px">RELAXED FIT HIGH NE…</div><div style="font-size: 10px; color: #A3A3A3">$129.00</div></button>
+    <button onClick="{{goPdp}}" style="border: 1px solid #2C2C2E; border-radius: 8px; background: #141414; padding: 6px; text-align: left; color: #FFFFFF"><div style="height: 80px; background: #EDEDED; border-radius: 4px; position: relative"><span style="position: absolute; left: 4px; top: 4px; padding: 1px 4px; background: #DC2626; color: #FFFFFF; font-size: 8px">-30%</span></div><div style="font-size: 10px; font-weight: 700; margin-top: 5px">LEATHER EFFECT JAC…</div><div style="font-size: 10px; color: #A3A3A3">$119.00</div></button>
+  </div>
+  <div style="margin-top: auto; margin-left: -14px; margin-right: -14px; background: #2C2C2E; padding: 8px 6px 26px; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px"><sc-for list="{{keys1}}" as="item" hint-placeholder-count="10"><span style="height: 30px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">{{item}}</span></sc-for></div>
+    <div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; padding: 0 12px"><sc-for list="{{keys2}}" as="item" hint-placeholder-count="9"><span style="height: 30px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">{{item}}</span></sc-for></div>
+    <div style="display: flex; gap: 4px"><button onClick="{{clearQuery}}" style="flex: 0 0 56px; height: 34px; border: 0; border-radius: 5px; background: #3A3A3C; color: #FFFFFF; font-size: 11px">Clear</button><span style="flex: 1 1 auto; height: 34px; border-radius: 5px; background: #5A5A5E; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFFFFF">space</span><button onClick="{{goResults}}" style="flex: 0 0 86px; height: 34px; border: 0; border-radius: 5px; background: #FFFFFF; color: #111111; font-size: 13px; font-weight: 700">Search</button></div>
+  </div>
+</div>
+</sc-if>
+
+<!-- A5 SEARCH RESULTS -->
+<sc-if value="{{f.search_results}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 4px 14px 16px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><button onClick="{{goSearch}}" aria-label="Back" style="width: 36px; height: 36px; border: 0; background: none; color: #FFFFFF; font-size: 18px; padding: 0; text-align: left">←</button><span style="display: flex; gap: 6px"><button onClick="{{toggleSort}}" style="height: 34px; padding: 0 12px; border: 1px solid #444444; border-radius: 17px; background: #141414; color: #FFFFFF; font-size: 11px; font-weight: 700">{{sortLabel}} ⌄</button><button onClick="{{goFilter}}" style="height: 34px; padding: 0 12px; border: 1px solid #444444; border-radius: 17px; background: #141414; color: #FFFFFF; font-size: 11px; font-weight: 700">☰ FILTERS</button></span></div>
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #333333; font-size: 13px; font-weight: 700"><span>⌕ {{queryUpper}}</span><span>✕</span></div>
+  <div style="display: flex; justify-content: space-between; align-items: center"><span style="display: flex; gap: 6px"><span style="padding: 5px 10px; border-radius: 14px; background: #FFFFFF; color: #111111; font-size: 10px; font-weight: 700">WOMAN</span><span style="padding: 5px 10px; border-radius: 14px; border: 1px solid #444444; font-size: 10px">MAN</span><span style="padding: 5px 10px; border-radius: 14px; border: 1px solid #444444; font-size: 10px">KIDS</span><span style="padding: 5px 10px; border-radius: 14px; border: 1px solid #A16207; color: #FACC15; font-size: 10px">SALE %</span></span><span style="font-size: 10px; color: #A3A3A3">1 · <b style="color: #FFFFFF">2</b> · 3</span></div>
+  <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3"><span>{{resultCount}} PRODUCTS ({{dept.label}})</span><span style="color: #4ADE80">✓ Live filtered</span></div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <sc-for list="{{results}}" as="item" hint-placeholder-count="3">
+      <div style="border: 1px solid #2C2C2E; border-radius: 8px; background: #141414; padding: 6px; display: flex; flex-direction: column; gap: 4px">
+        <button onClick="{{goPdp}}" aria-label="Open {{item.name}}" style="height: 150px; border: 0; border-radius: 4px; background: {{item.tone}}; position: relative; padding: 0"><span style="position: absolute; left: 6px; top: 6px; padding: 2px 6px; border-radius: 3px; background: {{item.tagBg}}; color: #FFFFFF; font-size: 9px; font-weight: 700">{{item.tag}}</span></button>
+        <b style="font-size: 10px">{{item.name}}</b>
+        <div style="display: flex; justify-content: space-between; align-items: center"><span style="display: flex; flex-direction: column"><b style="font-size: 11px">{{item.price}}</b><s style="font-size: 9px; color: #8A8A8A">{{item.was}}</s></span><button onClick="{{goBag}}" aria-label="Add {{item.name}}" style="width: 30px; height: 30px; border: 1px solid #444444; border-radius: 4px; background: #1C1C1E; color: #FFFFFF">+</button></div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<!-- A6 FILTER -->
+<sc-if value="{{f.filter}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding: 4px 14px 0">
+  <div style="display: flex; justify-content: space-between; align-items: center"><button onClick="{{goResults}}" aria-label="Close filters" style="width: 36px; height: 36px; border: 0; background: none; color: #FFFFFF; font-size: 16px; padding: 0; text-align: left">✕</button><b style="font-size: 13px">FILTERS</b><button onClick="{{clearCats}}" style="height: 36px; border: 0; background: none; color: #FFFFFF; font-size: 12px">Clear all</button></div>
+  <div style="margin: 0 -14px; padding: 10px 14px; background: #1C1C1E; display: flex; flex-wrap: wrap; gap: 6px; min-height: 20px">
+    <sc-if value="{{noCats}}" hint-placeholder-val="{{ true }}"><span style="font-size: 11px; font-style: italic; color: #A3A3A3">No filters applied (showing all department products)</span></sc-if>
+    <sc-for list="{{chips}}" as="item" hint-placeholder-count="0"><button onClick="{{item.remove}}" style="height: 28px; padding: 0 10px; border: 0; border-radius: 14px; background: #FFFFFF; color: #111111; font-size: 11px; font-weight: 600">{{item.label}} ✕</button></sc-for>
+  </div>
+  <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 12px; font-weight: 700"><span>Sort by</span><span>›</span></div>
+  <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; padding: 0 12px 8px">
+    <div style="height: 40px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 700"><span>Categories</span><span>⌄</span></div>
+    <sc-for list="{{cats}}" as="item" hint-placeholder-count="6">
+      <label style="height: 30px; display: flex; align-items: center; gap: 10px; font-size: 12px"><input type="checkbox" checked="{{item.on}}" onChange="{{item.toggle}}" style="width: 16px; height: 16px; margin: 0">{{item.label}}</label>
+    </sc-for>
+  </div>
+  <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 12px; font-weight: 700"><span>Colour</span><span>›</span></div>
+  <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 12px; font-weight: 700"><span>Special Offers</span><span>›</span></div>
+  <div style="margin-top: auto; padding: 12px 0 26px"><button onClick="{{goResults}}" style="width: 100%; height: 46px; border: 0; border-radius: 6px; background: #FFFFFF; color: #111111; font-size: 13px; font-weight: 700; letter-spacing: 0.5px">VIEW {{filterCount}} RESULTS</button></div>
+</div>
+</sc-if>
+
+<!-- A7 PDP -->
+<sc-if value="{{f.pdp}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 0 14px 70px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><button onClick="{{goResults}}" aria-label="Close" style="width: 40px; height: 44px; border: 0; background: none; font-size: 18px; padding: 0; text-align: left">✕</button>
+    <span style="display: flex"><button style="width: 48px; height: 48px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-size: 10px">⌑<span>Save</span></button><button style="width: 48px; height: 48px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-size: 10px">⇪<span>Share</span></button><button onClick="{{goBag}}" style="width: 48px; height: 48px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-size: 10px">▭<span>Bag ({{bagQty}})</span></button></span>
+  </div>
+  <div style="display: flex; gap: 12px">
+    <div style="width: 150px; height: 200px; flex: 0 0 auto; border-radius: 6px; background: {{pdpTone}}; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center">
+      <svg width="{{zoomW}}" height="{{zoomH}}" viewBox="0 0 24 24" fill="rgba(255,255,255,0.3)" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M8.5 7.5h7l1.5 9h-2l-.5 6h-5l-.5-6h-2z"/></svg>
+      <span style="position: absolute; left: 6px; top: 6px; padding: 2px 6px; border-radius: 3px; background: rgba(255,255,255,0.9); font-size: 9px; font-weight: 600">Pinch to zoom</span>
+      <span style="position: absolute; left: 6px; bottom: 6px; display: flex; flex-direction: column; gap: 4px"><button onClick="{{zoomIn}}" aria-label="Zoom in" style="width: 28px; height: 28px; border: 0; border-radius: 14px; background: #FFFFFF">+</button><button onClick="{{zoomOut}}" aria-label="Zoom out" style="width: 28px; height: 28px; border: 0; border-radius: 14px; background: #FFFFFF">−</button></span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <b style="font-size: 14px; line-height: 1.3">RELAXED FIT HIGH NECK COAT</b>
+      <b style="font-size: 16px">$129.00</b>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6B6B6B; margin-top: 18px">COLOR: <b style="color: #111111">{{colorName}}</b></span>
+      <span style="display: flex; gap: 6px"><sc-for list="{{colors}}" as="item" hint-placeholder-count="3"><button onClick="{{item.pick}}" aria-label="{{item.name}}" aria-pressed="{{item.pressed}}" style="width: 32px; height: 32px; border-radius: 4px; border: 2px solid {{item.ring}}; padding: 2px; background: #FFFFFF"><span style="display: block; width: 100%; height: 100%; border-radius: 2px; background: {{item.hex}}"></span></button></sc-for></span>
+      <span style="font-size: 10px; color: #6B6B6B">188 cm · Size L</span>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center"><b style="font-family: 'IBM Plex Mono', monospace; font-size: 11px">SIZE</b><span style="font-size: 11px; text-decoration: underline">Size recommender</span></div>
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{sizes}}" as="item" hint-placeholder-count="4"><button onClick="{{item.pick}}" aria-pressed="{{item.pressed}}" style="height: 40px; border-radius: 4px; border: 1px solid {{item.bd}}; background: {{item.bg}}; color: {{item.fg}}; font-size: 13px; font-weight: 700">{{item.label}}</button></sc-for>
+  </div>
+  <button onClick="{{addToBag}}" style="height: 56px; border: 0; border-radius: 6px; background: #111111; color: #FFFFFF; font-size: 14px; font-weight: 700; letter-spacing: 1px">ADD TO BAG · {{size}}</button>
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #6B6B6B">DETAILS &amp; COMPOSITION (1 OPEN AT A TIME)</span>
+  <sc-for list="{{accordion}}" as="item" hint-placeholder-count="4">
+    <div style="border: 1px solid #E5E5E5; border-radius: 6px; padding: 0 12px">
+      <button onClick="{{item.toggle}}" aria-expanded="{{item.expanded}}" style="width: 100%; height: 42px; display: flex; justify-content: space-between; align-items: center; border: 0; background: none; padding: 0; font-size: 12px; font-weight: 700; text-align: left"><span>{{item.label}}</span><span>{{item.chev}}</span></button>
+      <sc-if value="{{item.open}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 10px; font-size: 12px; line-height: 1.5; color: #3D3D3D">{{item.body}}</p></sc-if>
+    </div>
+  </sc-for>
+</div>
+</sc-if>
+
+<!-- A8 BAG -->
+<sc-if value="{{f.bag}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 0; font-size: 12px">
+  <div style="display: flex; justify-content: space-between"><button onClick="{{goHome}}" aria-label="Close" style="width: 36px; height: 36px; border: 0; background: none; font-size: 16px; padding: 0; text-align: left">✕</button><span style="font-size: 16px">▭</span></div>
+  <div style="display: flex; gap: 20px; font-family: 'IBM Plex Mono', monospace; font-size: 11px"><b style="border-bottom: 2px solid #111111; padding-bottom: 4px">SHOPPING BAG | {{bagQty}} |</b><span style="color: #6B6B6B">FAVOURITES</span></div>
+  <div style="display: flex; gap: 12px">
+    <div style="width: 76px; height: 100px; background: #EFEFEF; border-radius: 4px; display: flex; align-items: center; justify-content: center"><div style="width: 48px; height: 58px; background: {{bagTone}}"></div></div>
+    <div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 6px">
+      <b style="font-size: 12px">{{bagName}}</b>
+      <span style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: #555555">BLACK
+        <label style="position: absolute; left: -9999px" for="bs">Size</label>
+        <select id="bs" value="{{bagSize}}" onChange="{{changeBagSize}}" style="height: 30px; padding: 0 6px; border: 1.5px solid #111111; border-radius: 4px; background: #FFFFFF; font-size: 11px; font-weight: 700; color: #111111">
+          <option value="S">SIZE: S</option><option value="M">SIZE: M</option><option value="L">SIZE: L · ONLY 2 LEFT</option><option value="XL" disabled>SIZE: XL · SOLD OUT</option>
+        </select>
+      </span>
+      <sc-if value="{{lowStock}}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; color: #B45309; font-weight: 600">Only 2 left in size L</span></sc-if>
+      <b>{{bagPrice}}</b>
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #555555"><span style="display: flex; align-items: center; border: 1px solid #D4D4D4; border-radius: 4px"><button onClick="{{dec}}" aria-label="Fewer" style="width: 28px; height: 28px; border: 0; background: none">−</button><b style="color: #111111">{{bagQty}}</b><button onClick="{{inc}}" aria-label="More" style="width: 28px; height: 28px; border: 0; background: none">+</button></span><span>DELETE | ⌑</span></div>
+    </div>
+  </div>
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #6B6B6B; padding-top: 10px; border-top: 1px solid #E5E5E5">YOU MAY ALSO LIKE</span>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; font-size: 10px">
+    <div style="border: 1px solid #E5E5E5; border-radius: 4px; padding: 5px"><div style="height: 60px; background: #B2875B"></div><div style="margin-top: 4px">Faux Trench</div><div style="color: #6B6B6B">$89.00</div></div>
+    <div style="border: 1px solid #E5E5E5; border-radius: 4px; padding: 5px"><div style="height: 60px; background: #E9E4D8"></div><div style="margin-top: 4px">Knit Cardigan</div><div style="color: #6B6B6B">$59.00</div></div>
+    <div style="border: 1px solid #E5E5E5; border-radius: 4px; padding: 5px"><div style="height: 60px; background: #1E2838"></div><div style="margin-top: 4px">Pleated Skirt</div><div style="color: #6B6B6B">$89.00</div></div>
+  </div>
+  <div style="margin-top: auto; padding: 12px 0 26px; border-top: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-weight: 700"><span>TOTAL</span><span>{{bagTotal}}</span></div><span style="font-size: 10px; color: #6B6B6B; text-align: right">* VAT included</span><button onClick="{{goCheckout}}" style="height: 46px; border: 0; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 13px; font-weight: 700; letter-spacing: 1px">CONTINUE ({{bagQty}})</button></div>
+</div>
+</sc-if>
+
+<!-- A9 CHECKOUT -->
+<sc-if value="{{f.checkout}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 0; font-size: 12px">
+  <button onClick="{{goBag}}" style="align-self: flex-start; height: 36px; border: 0; background: none; padding: 0; font-size: 12px; font-weight: 700">← BACK TO BAG</button>
+  <b style="font-size: 14px">REVIEW AND CONFIRM ORDER</b>
+  <div style="display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600"><span style="color: #15803D">✓ BAG</span><span style="flex: 1 1 auto; height: 1px; background: #111111"></span><span style="color: #15803D">✓ DELIVERY</span><span style="flex: 1 1 auto; height: 1px; background: #111111"></span><span style="border-bottom: 2px solid #111111">PAYMENT</span><span style="flex: 1 1 auto; height: 1px; background: #D4D4D4"></span><span style="color: #8A8A8A">DONE</span></div>
+  <div style="border: 1px solid #E5E5E5; border-radius: 6px; padding: 10px; display: flex; gap: 10px; align-items: center"><span style="width: 40px; height: 48px; background: {{bagTone}}"></span><span style="display: flex; flex-direction: column; gap: 3px"><b style="font-size: 11px">{{bagName}}</b><span style="font-size: 10px; color: #6B6B6B">SIZE {{bagSize}} · BLACK · QTY {{bagQty}}</span></span></div>
+  <div style="padding: 10px 0; border-bottom: 1px solid #E5E5E5; display: flex; justify-content: space-between"><span style="display: flex; flex-direction: column; gap: 3px"><b>SHIPPING METHOD</b><span style="font-size: 11px; color: #555555">Home Delivery · Ho Chi Minh City</span></span><span style="font-size: 11px; text-decoration: underline">Edit</span></div>
+  <div style="padding: 10px 0; border-bottom: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 3px"><span style="display: flex; justify-content: space-between"><b>DELIVERY DATE</b><span style="padding: 1px 6px; border-radius: 3px; background: #DCFCE7; color: #15803D; font-size: 10px; font-weight: 700">FREE</span></span><span style="font-size: 11px">THURSDAY 29</span><span style="font-size: 10px; color: #6B6B6B">Free shipping on orders over $50.00</span></div>
+  <div style="padding: 10px 0; display: flex; justify-content: space-between"><span style="display: flex; flex-direction: column; gap: 3px"><b>PAYMENT METHOD</b><span style="font-size: 11px; color: #555555">Apple Pay · Visa ****4092</span></span><span style="font-size: 11px; text-decoration: underline">Edit</span></div>
+  <button onClick="{{goBag}}" style="align-self: center; height: 36px; border: 0; background: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-decoration: underline">CANCEL AND RETURN TO BAG</button>
+  <div style="margin-top: auto; padding: 12px 0 26px; border-top: 1px solid #E5E5E5; display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-weight: 700"><span>TOTAL</span><span>{{bagTotal}}</span></div><button onClick="{{goPayment}}" style="height: 46px; border: 0; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 13px; font-weight: 700; letter-spacing: 1px">AUTHORISE PAYMENT</button></div>
+</div>
+</sc-if>
+
+<!-- A10 PAYMENT RESULT -->
+<sc-if value="{{f.payment_result}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 0; font-size: 12px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><button onClick="{{goHome}}" aria-label="Close" style="width: 36px; height: 36px; border: 0; background: none; font-size: 16px; padding: 0; text-align: left">✕</button><button onClick="{{togglePaid}}" style="height: 28px; padding: 0 10px; border: 1px solid #D4D4D4; border-radius: 4px; background: #FAFAFA; font-size: 10px">Toggle: {{paidToggleLabel}}</button></div>
+  <sc-if value="{{cancelled}}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div><div style="display: flex; align-items: center; gap: 6px; color: #DC2626; font-weight: 700; font-size: 13px">ⓘ PAYMENT CANCELLED</div><b style="font-size: 15px">YOUR ORDER WAS NOT PLACED</b></div>
+      <div style="border: 1px solid #E5E5E5; border-radius: 6px; padding: 10px; display: flex; gap: 10px; align-items: center"><span style="width: 40px; height: 48px; background: {{bagTone}}"></span><span style="display: flex; flex-direction: column; gap: 3px"><b style="font-size: 11px">{{bagName}}</b><span style="font-size: 10px; color: #6B6B6B">{{bagTotal}}</span></span></div>
+      <div style="border: 1px solid #86EFAC; border-radius: 8px; background: #F0FDF4; padding: 12px; font-size: 12px; line-height: 1.5; color: #14532D">You have <b>not been charged</b>. Your items are still safely saved in your shopping bag.</div>
+      <button onClick="{{goCheckout}}" style="height: 44px; border: 0; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 13px; font-weight: 700; letter-spacing: 1px">TRY AGAIN</button>
+      <button onClick="{{goCheckout}}" style="height: 44px; border: 1.5px solid #111111; border-radius: 4px; background: #FFFFFF; font-size: 12px; font-weight: 700; letter-spacing: 1px">CHANGE PAYMENT METHOD</button>
+      <button onClick="{{goBag}}" style="align-self: center; height: 32px; border: 0; background: none; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-decoration: underline">BACK TO BAG</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{paid}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <div><div style="display: flex; align-items: center; gap: 6px; color: #15803D; font-weight: 700; font-size: 13px">✓ PAYMENT SUCCESSFUL</div><b style="font-size: 15px">YOUR ORDER IS PLACED</b></div>
+      <div style="border: 1px solid #E5E5E5; border-radius: 6px; padding: 10px; font-size: 12px; line-height: 1.5">Order number [#000000] · estimated delivery Thursday 29, October.</div>
+      <button onClick="{{goHome}}" style="height: 44px; border: 0; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 13px; font-weight: 700; letter-spacing: 1px">CONTINUE SHOPPING</button>
+    </div>
+  </sc-if>
+  <span style="margin-top: auto; padding: 14px 0 26px; text-align: center; font-size: 11px; color: #6B6B6B">Need help? <b style="color: #111111">Chat with us</b></span>
+</div>
+</sc-if>
+
+<!-- A11 COOKIE -->
+<sc-if value="{{f.cookie}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 24px 22px 0">
+  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #4ADE80">⛨ GDPR &amp; CCPA COMPLIANT</span>
+  <b style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.5px">USE OF COOKIES</b>
+  <span style="font-size: 12px; line-height: 1.55; color: #D4D4D4">We use first-party and third-party cookies to understand store usage and personalize content. You can accept all cookies, reject non-essential cookies with one tap, or customize your preferences at any time.</span>
+  <span style="padding: 10px; background: #1C1C1E; border-radius: 6px; font-size: 11px; line-height: 1.5; color: #A3A3A3">GDPR Art. 7(3): Equal visual weight &amp; 48px touch height on both primary choices.</span>
+  <sc-if value="{{granular}}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; flex-direction: column; border-top: 1px solid #333333">
+      <sc-for list="{{cookieRows}}" as="item" hint-placeholder-count="3">
+        <div style="height: 50px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #333333; font-size: 12px"><span>{{item.label}}</span><button onClick="{{item.toggle}}" disabled="{{item.locked}}" role="switch" aria-checked="{{item.checked}}" aria-label="{{item.label}}" style="width: 46px; height: 28px; border: 0; border-radius: 14px; padding: 3px; background: {{item.track}}; display: flex; justify-content: {{item.justify}}"><span style="width: 22px; height: 22px; border-radius: 11px; background: #FFFFFF"></span></button></div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <div style="margin-top: auto; padding-bottom: 30px; display: flex; flex-direction: column; gap: 10px">
+    <button onClick="{{goHome}}" style="height: 48px; border: 0; border-radius: 4px; background: #FFFFFF; color: #111111; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600">ACCEPT ALL (48PX)</button>
+    <button onClick="{{goHome}}" style="height: 48px; border: 1.5px solid #FFFFFF; border-radius: 4px; background: transparent; color: #FFFFFF; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600">REJECT NON-ESSENTIAL (48PX)</button>
+    <button onClick="{{toggleGranular}}" style="height: 36px; border: 0; background: none; color: #D4D4D4; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-decoration: underline">{{granularLabel}}</button>
+  </div>
+</div>
+</sc-if>
+
+<!-- A12 ACCOUNT -->
+<sc-if value="{{f.account}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column">
+  <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: #2C2C2E; font-size: 11px"><span>Cancel</span><b>account.zara.com</b><span style="color: #4ADE80; font-family: 'IBM Plex Mono', monospace; font-size: 10px">TLS 1.3</span></div>
+  <div style="padding: 20px 16px 0; display: flex; flex-direction: column; gap: 12px">
+    <span style="font-family: 'Bodoni Moda', serif; font-size: 34px; font-weight: 700; text-align: center">ZARA</span>
+    <div role="tablist" aria-label="Account" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #333333">
+      <sc-for list="{{authTabs}}" as="item" hint-placeholder-count="2"><button onClick="{{item.pick}}" role="tab" aria-selected="{{item.pressed}}" style="height: 44px; border: 0; border-bottom: 2px solid {{item.bd}}; background: none; color: {{item.fg}}; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600">{{item.label}}</button></sc-for>
+    </div>
+    <label for="ae" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #4ADE80">EMAIL ADDRESS</label>
+    <div style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 10px; border: 1px solid {{emailBd}}; border-radius: 6px; background: #141414">
+      <input id="ae" type="email" value="{{email}}" onChange="{{typeEmail}}" placeholder="name@example.com" autocomplete="off" style="flex: 1 1 auto; min-width: 0; height: 40px; border: 0; outline: none; background: transparent; color: #FFFFFF; font-size: 14px">
+      <sc-if value="{{emailOk}}" hint-placeholder-val="{{ true }}"><span style="padding: 3px 8px; border-radius: 4px; border: 1px solid #16A34A; color: #4ADE80; font-size: 10px; font-weight: 700">✓ VALID</span></sc-if>
+    </div>
+    <span style="font-size: 11px; color: {{emailMsgColor}}">{{emailMsg}}</span>
+    <sc-if value="{{isRegister}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="ap" style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3">PASSWORD</label>
+        <input id="ap" type="password" value="{{pw}}" onChange="{{typePw}}" autocomplete="off" style="height: 44px; padding: 0 10px; border: 1px solid #444444; border-radius: 6px; background: #141414; color: #FFFFFF; outline: none; font-size: 14px">
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px"><span style="height: 5px; border-radius: 3px; background: {{bar1}}"></span><span style="height: 5px; border-radius: 3px; background: {{bar2}}"></span><span style="height: 5px; border-radius: 3px; background: {{bar3}}"></span></div>
+        <span style="font-size: 11px; color: #A3A3A3">Strength: <b style="color: #FFFFFF">{{strength}}</b></span>
+      </div>
+    </sc-if>
+    <button onClick="{{goReturns}}" style="height: 46px; border: 0; border-radius: 4px; background: #FFFFFF; color: #111111; font-size: 13px; font-weight: 700; letter-spacing: 1px">{{authCta}}</button>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #8A8A8A; text-align: center">OR ACCESS WITH</span>
+    <span style="height: 40px; border: 1px solid #555555; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">CONTINUE WITH APPLE</span>
+    <span style="height: 40px; border: 1px solid #555555; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600">G CONTINUE WITH GOOGLE</span>
+    <span style="font-size: 10px; color: #8A8A8A; text-align: center">Demo only · nothing is sent</span>
+  </div>
+</div>
+</sc-if>
+
+<!-- A13 RETURNS -->
+<sc-if value="{{f.returns}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 12px; padding: 4px 14px 0; font-size: 12px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><button onClick="{{goAccount}}" style="height: 36px; border: 0; background: none; padding: 0; color: #FFFFFF; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">← RETURNS WIZARD</button><span style="padding: 4px 10px; border-radius: 12px; border: 1px solid #16A34A; color: #4ADE80; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600">◷ 24 DAYS LEFT</span></div>
+  <div style="display: flex; gap: 4px; padding: 6px; border: 1px solid #333333; border-radius: 8px; background: #141414">
+    <sc-for list="{{rsteps}}" as="item" hint-placeholder-count="4"><button onClick="{{item.go}}" aria-pressed="{{item.pressed}}" style="flex: 1 1 0; height: 32px; border: 0; border-radius: 4px; background: {{item.bg}}; color: {{item.fg}}; font-size: 10px; font-weight: 700">{{item.label}}</button></sc-for>
+  </div>
+  <sc-if value="{{r1}}" hint-placeholder-val="{{ false }}">
+    <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; padding: 12px; display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3">STEP 1 · SELECT ITEM</span><div style="display: flex; gap: 10px; align-items: center; padding: 10px; border: 1.5px solid #16A34A; border-radius: 6px"><span style="width: 40px; height: 50px; background: #8B857B"></span><span style="display: flex; flex-direction: column; gap: 2px"><b style="font-size: 12px">WOOL BLEND COAT · SIZE M</b><span style="font-size: 10px; color: #A3A3A3">Delivered 7 days ago</span></span></div></div>
+  </sc-if>
+  <sc-if value="{{r2}}" hint-placeholder-val="{{ false }}">
+    <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; padding: 12px; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3">STEP 2 · REASON</span>
+      <sc-for list="{{reasons}}" as="item" hint-placeholder-count="4"><button onClick="{{item.pick}}" aria-pressed="{{item.pressed}}" style="height: 40px; border: 1.5px solid {{item.bd}}; border-radius: 6px; background: transparent; color: #FFFFFF; font-size: 12px; text-align: left; padding: 0 12px">{{item.label}}</button></sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{r3}}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 10px"><span style="color: #A3A3A3">STEP 3 · SELECT DROP-OFF LOCATION</span><span style="color: #4ADE80">◢ {{storeDist}}</span></div>
+        <div style="border: 1.5px solid #16A34A; border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 4px"><span style="display: flex; justify-content: space-between"><b style="font-size: 12px">⌖ {{storeName}}</b><span style="padding: 1px 6px; border-radius: 3px; border: 1px solid #16A34A; color: #4ADE80; font-size: 9px">ACTIVE</span></span><span style="font-size: 10px; color: #A3A3A3">{{storeAddr}}</span><span style="font-size: 10px; color: #D4D4D4">✓ Instant QR drop-off counter available</span></div>
+      </div>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3">AVAILABLE LOCATIONS IN HO CHI MINH CITY (3)</span>
+      <sc-for list="{{stores}}" as="item" hint-placeholder-count="3">
+        <button onClick="{{item.pick}}" aria-pressed="{{item.pressed}}" style="border: 1px solid {{item.bd}}; border-radius: 8px; background: #141414; color: #FFFFFF; padding: 10px; display: flex; justify-content: space-between; align-items: flex-start; text-align: left"><span style="display: flex; flex-direction: column; gap: 3px"><b style="font-size: 12px">{{item.name}}</b><span style="font-size: 10px; color: #A3A3A3">{{item.addr}}</span></span><span style="font-size: 10px; color: #4ADE80; white-space: nowrap">{{item.dist}}</span></button>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{r4}}" hint-placeholder-val="{{ false }}">
+    <div style="border: 1px solid #333333; border-radius: 8px; background: #141414; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #A3A3A3">STEP 4 · RETURN QR CODE</span>
+      <svg width="150" height="150" viewBox="0 0 21 21" role="img" aria-label="Return QR code placeholder" style="background: #FFFFFF; padding: 8px"><path fill="#111111" d="M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0zM2 2v3h3V2zM16 2v3h3V2zM2 16v3h3v-3zM9 1h2v2H9zM11 4h1v3h-1zM9 9h3v1H9zM13 9h2v2h-2zM8 12h2v2H8zM11 12h3v1h-3zM15 13h3v2h-3zM9 15h2v3H9zM12 16h2v2h-2zM16 17h4v1h-4zM18 9h3v3h-3zM1 9h4v2H1zM12 19h3v2h-3z"/></svg>
+      <span style="font-size: 12px; color: #D4D4D4">Show this code at {{storeName}}.</span></div>
+  </sc-if>
+  <div style="margin-top: auto; padding: 12px 0 26px; display: flex; flex-direction: column; gap: 8px">
+    <button onClick="{{rNext}}" style="height: 46px; border: 0; border-radius: 4px; background: #FFFFFF; color: #111111; font-size: 13px; font-weight: 700">{{rNextLabel}}</button>
+    <button onClick="{{rBack}}" style="height: 44px; border: 1px solid #555555; border-radius: 4px; background: transparent; color: #FFFFFF; font-size: 12px; font-weight: 600">{{rBackLabel}}</button>
+  </div>
+</div>
+</sc-if>
+
+      </div>
+
+      <!-- after tab bar -->
+      <sc-if value="{{showTabs}}" hint-placeholder-val="{{ true }}">
+        <nav aria-label="Main" style="position: relative; z-index: 4; flex: 0 0 auto; height: 82px; box-sizing: border-box; padding-bottom: 18px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid {{tabBd}}; background: {{tabBg}}">
+          <sc-for list="{{tabs}}" as="item" hint-placeholder-count="5">
+            <button onClick="{{item.go}}" style="border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: {{item.c}}; font-size: 11px; font-weight: {{item.w}}"><span style="font-size: 17px">{{item.icon}}</span>{{item.label}}</button>
+          </sc-for>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{showBadges}}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{aBadges}}" as="item" hint-placeholder-count="2">
+          <span aria-hidden="true" style="position: absolute; left: {{item.x}}%; top: {{item.y}}%; z-index: 6; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 12px; background: #16A34A; color: #FFFFFF; border: 2px solid #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.4); pointer-events: none">{{item.n}}</span>
+        </sc-for>
+      </sc-if>
+    </div>
+  </div>
+  </div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1400,"height":1160}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { flow: 'home', badges: true, dept: 'woman', edits: false, query: 'bead', sortLow: false, cats: {}, size: 'M', color: 0, zoom: 1, acc: 0,
+      bagSize: 'M', bagQty: 1, bagPid: 'leather', cancelled: true, granular: false, cFunc: true, cAna: false, tab: 'login', email: 'name@example.com', pw: '', rstep: 3, reason: 0, store: 0 };
+  }
+  flows() {
+    return [
+      ['home', '01. Home & Landing', 'Part 1 · Home & Menu', 'Problems #1, 2'],
+      ['menu', '02. Main Menu Drawer', 'Part 1 · Home & Menu', 'Problem #5'],
+      ['lookbook', '03. Lookbook Display', 'Part 1 · Home & Menu', 'Problem #7'],
+      ['search_typing', '04. Search While Typing', 'Part 2 · Search & List', 'Problems #8, 10'],
+      ['search_results', '05. Search Results', 'Part 2 · Search & List', 'Problem #11'],
+      ['filter', '06. Smart Filter', 'Part 2 · Search & List', 'Problem #12'],
+      ['pdp', '07. Product Page (PDP)', 'Part 3 · Product Page', 'Problems #11–16'],
+      ['bag', '08. Bag & Edit Size', 'Part 4 · Bag & Checkout', 'Problems #17, 22'],
+      ['checkout', '09. Review & Checkout', 'Part 4 · Bag & Checkout', 'Problems #18, 23'],
+      ['payment_result', '10. Payment Result', 'Part 4 · Bag & Checkout', 'Problems #19, 24'],
+      ['cookie', '11. Cookie & Privacy', 'Part 5 · Account & Help', 'Problem #21'],
+      ['account', '12. Tabbed Auth & OTP', 'Part 5 · Account & Help', 'Problems #22–24'],
+      ['returns', '13. Returns Wizard', 'Part 5 · Account & Help', 'Problem #26']
+    ];
+  }
+  noteData() {
+    return {
+      home_pills: ['Floating Category Quick-Pills', 'Nielsen #1 (Visibility of System Status) & #6 (Recognition over Recall)', '100% full-screen editorial video monopolizes the opening view with zero shopping access points, causing cognitive freeze (~45s to locate men’s apparel).', 'Frosted-glass category pills [WOMAN] [MAN] [KIDS] [SALE %] allow direct 1-tap department entry in under 8 seconds.'],
+      home_navbar: ['5-Tab Standardized Navigation Bar', 'Apple HIG & Nielsen #7 (Flexibility and Efficiency of Use)', 'Asymmetrical 3-item text bottom bar (CATALOG, ACCOUNT, |0|) with misplaced indicator dot overlapping text and no direct Home/Search tabs.', 'Standardized 5-tab navigation bar [Home, Menu, Search, Saved, Bag] with 44pt touch targets adhering to Apple Human Interface Guidelines.'],
+      menu_taxonomy: ['Functional-First Garment Taxonomy', 'Nielsen #2 (Match between System and Real World)', 'Drawer menu dominated by 8 influencer names (Marianne Smyth, Sophia Geiss…) and cryptic collaboration codes (SRPLS FLWRS), burying standard garment categories.', 'Functional-first apparel taxonomy (Jackets, Coats, Blazers, Shirts…) prioritized at the top with live product counts; influencer names grouped under ‘Edits’.'],
+      header_safe_area: ['Header 44pt Apple Safe Area Insets', 'Apple HIG & WCAG 2.1 (Contrast & Clipping)', 'Red header text ‘- SECONDHAND -’ directly collides with Dynamic Island and status bar icons on iPhone.', 'Standard 44pt Apple Safe Area Inset padding added, replacing cryptic ‘VIEW 1’ with responsive column layout controls.'],
+      lookbook_metadata: ['Lookbook Transparent Metadata & Quick-Add', 'Nielsen #1 (Visibility of System Status)', 'Blind browsing experience: editorial photos display without product names, prices, or color availability.', 'Full metadata display with item name, localized pricing, color swatches, and a 1-tap quick add button.'],
+      search_autocomplete: ['Fix Overlapping Autocomplete Suggestions', 'Nielsen #8 (Aesthetic and Minimalist Design)', 'Typing ‘bead’ causes autocomplete query suggestions to collide and overlap with product thumbnails and the keyboard.', 'Clear visual separation between autocomplete search queries and recommendation cards with proper spacing.'],
+      search_ranking: ['Keyword Relevance Ranking', 'Nielsen #2 (Match between System and Real World)', 'Querying ‘bead’ returns an unrelated item (‘EMBROIDERED TOP…’) as the top result due to flawed keyword ranking.', 'Ranking prioritizes exact product-name matches first (Beaded Ribbed Top, Beaded Bandeau Dress, Beaded Shoulder Bag…).'],
+      smart_filter: ['Collapsible Filter with Summary Chips & Result Count', 'Nielsen #3 (User Control and Freedom) & #1 (Feedback)', 'Unending permanently expanded list requiring excessive scrolling, with zero active filter chips and a blind ‘VIEW RESULTS’ button.', 'Accordion collapsible sections, removable active summary chips (✕), and a live dynamic count button (‘VIEW 3 RESULTS’).'],
+      pdp_photo_ratio: ['Optimized 32% Photo with Interactive Zoom Controls', 'Nielsen #8 (Aesthetic and Minimalist Design) & #6 (Recognition)', 'Product photo occupies 60% of vertical height, pushing product name, pricing, colorways, and purchase action off-screen.', 'Optimized 32% photo ratio with interactive +/− zoom controls and pinch gesture, fitting all crucial buy elements above the fold.'],
+      pdp_size_inline: ['Direct On-Page Size Selection & Model Fit Info', 'Nielsen #7 (Flexibility and Efficiency of Use)', 'Tapping ‘ADD’ forces a disruptive bottom sheet modal just to select sizes S/M/L/XL.', 'Inline size selector buttons right above the main CTA, accompanied by a size recommender and model fit information.'],
+      pdp_add_cta: ['High-Affordance Solid ADD TO BAG CTA', 'WCAG 2.2 AA & Nielsen #1 (Visibility of System Status)', 'Fragile thin-outline ‘ADD’ button with weak visual affordance, failing prominent action guidelines.', 'Full-width high-contrast solid black CTA with bold white typography.'],
+      bag_edit_size: ['1-Tap Inline Size Selector with Inventory Warning', 'Nielsen #5 (Error Prevention) & #7 (Efficiency)', 'Modifying size in the bag requires a tedious 5-step process: delete item → search again → reopen PDP → select new size → add to bag.', '1-tap inline size selector with inventory scarcity warnings (‘ONLY 2 LEFT’, ‘SOLD OUT’).'],
+      checkout_stepper: ['4-Step Progress Stepper & Safe Exit', 'Nielsen #1 (Visibility of System Status) & #3 (User Freedom)', 'Checkout lacks step progress indication, safe exit back to bag, and suffers from cluttered typography.', '4-step progress stepper (✓ BAG — ✓ DELIVERY — PAYMENT — DONE) with explicit ‘← Back to bag’ and ‘Cancel’ links.'],
+      payment_honesty: ['Honest System Status on Payment Failure', 'Nielsen #1 (Visibility of System Status) & #9 (Help Users Recover from Errors)', 'Bank-declined transactions still display ‘THANK YOU FOR SHOPPING AT ZARA’, causing severe user deception.', 'Accurate system status ‘PAYMENT CANCELLED’, reassuring users that their funds are untouched, with retry options.'],
+      cookie_consent: ['Fair Cookie Consent & Granular GDPR Controls', 'Nielsen #3 (User Control and Freedom) & GDPR Compliance', 'Forced dark pattern with only a single ‘CONTINUE’ button, providing zero option to decline tracking cookies.', 'Equal-weight ‘REJECT NON-ESSENTIAL’ button alongside ‘ACCEPT ALL’, with 3-tier granular GDPR consent settings.'],
+      auth_tabs: ['Tabbed Onboarding with Live Email Validation', 'Nielsen #5 (Error Prevention) & #1 (Feedback)', 'Ambiguous single field ‘LOG IN OR REGISTER’ leaving users unaware if an account exists, with no live validation.', 'Dedicated [LOG IN] and [REGISTER] tabs, instant email validation checkmark, and a 3-tier password strength meter.'],
+      returns_stepper: ['4-Step Returns Wizard & 30-Day Countdown Badge', 'Nielsen #9 (Help Users Recover) & #1 (Visibility of Status)', 'Static dead-end ‘THERE ARE NO ACTIVE RETURNS AT THIS TIME’ offering no return window info or drop-off guidelines.', 'Guided 4-step returns wizard (Items → Reason → Drop-off → QR Code) with a 24-day countdown badge and drop-off map.']
+    };
+  }
+  flowMeta() {
+    return {
+      home: { notes: ['home_pills', 'home_navbar'], b: [[1, 87, 46], [2, 88, 91]], a: [[1, 88, 79], [2, 50, 92]], bDark: true, aDark: true },
+      menu: { notes: ['menu_taxonomy'], b: [[1, 92, 10], [1, 92, 48]], a: [[1, 92, 31], [1, 92, 77]], bDark: false, aDark: false },
+      lookbook: { notes: ['header_safe_area', 'lookbook_metadata'], b: [[1, 18, 1.5], [2, 50, 11]], a: [[1, 30, 1.5], [2, 92, 28]], bDark: false, aDark: false },
+      search_typing: { notes: ['search_autocomplete'], b: [[1, 93, 25]], a: [[1, 93, 22]], bDark: true, aDark: true },
+      search_results: { notes: ['search_ranking'], b: [[1, 30, 23]], a: [[1, 58, 3]], bDark: true, aDark: true },
+      filter: { notes: ['smart_filter'], b: [[1, 93, 9]], a: [[1, 93, 9], [1, 93, 18]], bDark: true, aDark: true },
+      pdp: { notes: ['pdp_photo_ratio', 'pdp_size_inline', 'pdp_add_cta'], b: [[1, 6, 10], [2, 22, 68], [3, 82, 62]], a: [[1, 6, 9], [2, 50, 42], [3, 94, 50]], bDark: false, aDark: false },
+      bag: { notes: ['bag_edit_size'], b: [[1, 94, 13]], a: [[1, 94, 13]], bDark: false, aDark: false },
+      checkout: { notes: ['checkout_stepper'], b: [[1, 94, 5]], a: [[1, 30, 0.5], [1, 94, 10]], bDark: false, aDark: false },
+      payment_result: { notes: ['payment_honesty'], b: [[1, 94, 7]], a: [[1, 94, 7]], bDark: false, aDark: false },
+      cookie: { notes: ['cookie_consent'], b: [[1, 88, 82]], a: [[1, 90, 76]], bDark: true, aDark: true },
+      account: { notes: ['auth_tabs'], b: [[1, 92, 18]], a: [[1, 30, 16], [1, 92, 24]], bDark: true, aDark: true },
+      returns: { notes: ['returns_stepper'], b: [[1, 93, 7]], a: [[1, 92, 3], [1, 92, 10]], bDark: true, aDark: true }
+    };
+  }
+  depts() {
+    return {
+      woman: { label: 'WOMAN', collection: 'AW 2026 STUDIO COLLECTION', title: 'TWILIGHT ROSES', status: 'NOW AVAILABLE', tone: '#2A2F3A' },
+      man: { label: 'MAN', collection: 'MAN 2026 TAILORING', title: 'URBAN TAILORING', status: 'NEW ARRIVALS', tone: '#3A3631' },
+      kids: { label: 'KIDS', collection: 'KIDS ATELIER 2026', title: 'AUTUMN COMFORT', status: 'EXPLORE NOW', tone: '#4A3B2C' },
+      sale: { label: 'SALE %', collection: 'MID-SEASON SALE · SPECIAL PRICES', title: 'UP TO 50% OFF', status: 'SHOP SALE NOW', tone: '#3B1E22' }
+    };
+  }
+  renderVals() {
+    var self = this, s = this.state, F = this.flows(), M = this.flowMeta()[s.flow], N = this.noteData();
+    var idx = F.map(function (x) { return x[0]; }).indexOf(s.flow), cur = F[idx];
+    var go = function (fl, ex) { return function () { self.setState(Object.assign({ flow: fl }, ex || {})); }; };
+    var f = {}; F.forEach(function (x) { f[x[0]] = x[0] === s.flow; });
+    var D = this.depts(), dept = D[s.dept];
+    var price = { leather: 119, coat: 129 };
+    var bagName = s.bagPid === 'coat' ? 'RELAXED FIT HIGH NECK COAT' : 'LEATHER EFFECT JACKET';
+    var bagTone = s.bagPid === 'coat' ? '#8B857B' : '#1C1C1C';
+    var unit = price[s.bagPid];
+    var catNames = ['Coats & Jackets', 'Blazers & Suits', 'Tops & Knitwear', 'Dresses & Skirts', 'Trousers & Jeans', 'Bags & Shoes'];
+    var catHits = { 'Tops & Knitwear': 1, 'Dresses & Skirts': 1, 'Bags & Shoes': 1 };
+    var selCats = catNames.filter(function (c) { return s.cats[c]; });
+    var fcount = selCats.length ? selCats.reduce(function (a, c) { return a + (catHits[c] || 0); }, 0) : 3;
+    var results = [
+      { name: 'BEADED RIBBED TOP', price: '$65.00', was: '$109.00', tone: '#1C1C1C', tag: '-40%', tagBg: '#DC2626', n: 65 },
+      { name: 'BEADED BANDEAU DRESS', price: '$89.00', was: '', tone: '#EDEDED', tag: '3 colors', tagBg: '#404040', n: 89 },
+      { name: 'BEADED SHOULDER BAG', price: '$139.00', was: '', tone: '#D9D9D6', tag: '2 colors', tagBg: '#404040', n: 139 }
+    ];
+    if (s.sortLow) results = results.slice().sort(function (a, b) { return a.n - b.n; });
+    var allSuggest = ['beaded', 'beaded top', 'beaded bag', 'beaded dress', 'bermuda shorts', 'blazer', 'boots'];
+    var q = (s.query || '').toLowerCase().trim();
+    var suggest = allSuggest.filter(function (w) { return q && w.indexOf(q) === 0; }).slice(0, 4);
+    if (!suggest.length) suggest = q ? ['“' + s.query + '”'] : ['beaded', 'blazer', 'boots'];
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email);
+    var pw = s.pw, score = !pw.length ? 0 : (pw.length >= 8 ? 1 : 0) + (/[A-Z]/.test(pw) && /[a-z]/.test(pw) ? 1 : 0) + (/[0-9]/.test(pw) || /[^A-Za-z0-9]/.test(pw) ? 1 : 0);
+    var barC = ['#3F3F46', '#DC2626', '#D97706', '#16A34A'][score];
+    var stores = [['ZARA VINCOM DONG KHOI', '72 Le Thanh Ton, Dist. 1, Ho Chi Minh City', '1.2 KM AWAY'], ['ZARA CRESCENT MALL', '101 Ton Dat Tien, Tan Phu, Dist. 7, Ho Chi Minh City', '3.8 KM AWAY'], ['ZARA LANDMARK 81', '720A Dien Bien Phu, Binh Thanh, Ho Chi Minh City', '4.1 KM AWAY']];
+    var st = stores[s.store];
+    var tabMap = { home: 'home', menu: 'menu', lookbook: 'saved', search_results: 'search' };
+    var showTabs = !!tabMap[s.flow];
+    var dark = M.aDark;
+    var colorsData = [['Taupe grey', '#8B857B'], ['Onyx Black', '#111111'], ['Midnight Navy', '#1B2838']];
+
+    return {
+      f: f, showBadges: s.badges, badgesPressed: String(s.badges), badgesLabel: s.badges ? '◉ UX Badges: ON' : '◎ UX Badges: OFF',
+      toggleBadges: function () { self.setState({ badges: !self.state.badges }); },
+      flowTabs: F.map(function (x) { var on = x[0] === s.flow; return { label: x[1], pressed: String(on), bg: on ? '#FFFFFF' : '#141414', fg: on ? '#111111' : '#D4D4D4', bd: on ? '#FFFFFF' : '#333333', go: go(x[0]) }; }),
+      prev: function () { if (idx > 0) self.setState({ flow: F[idx - 1][0] }); }, next: function () { if (idx < F.length - 1) self.setState({ flow: F[idx + 1][0] }); },
+      atFirst: idx === 0, atLast: idx === F.length - 1,
+      flowName: cur[1], part: cur[2], tag: cur[3],
+      notes: M.notes.map(function (k, i) { var d = N[k]; return { n: i + 1, title: d[0], heuristic: d[1], problem: d[2], solution: d[3] }; }),
+      bBadges: M.b.map(function (p) { return { n: p[0], x: p[1], y: p[2] }; }),
+      aBadges: M.a.map(function (p) { return { n: p[0], x: p[1], y: p[2] }; }),
+      bBg: M.bDark ? '#000000' : '#FFFFFF', bFg: M.bDark ? '#FFFFFF' : '#111111',
+      aBg: dark ? '#0A0A0A' : '#FFFFFF', aFg: dark ? '#FFFFFF' : '#111111',
+      // nav
+      goHome: go('home'), goLookbook: go('lookbook'), goFilter: go('filter'), goPdp: go('pdp', { size: 'M', color: 0, zoom: 1, acc: 0 }), goSearch: go('search_typing'), goResults: go('search_results'),
+      goBag: go('bag'), goCheckout: go('checkout'), goPayment: go('payment_result', { cancelled: true }), goReturns: go('returns', { rstep: 1 }), goAccount: go('account'),
+      showTabs: showTabs, tabBg: dark ? '#0A0A0A' : '#FFFFFF', tabBd: dark ? '#262626' : '#E5E5E5',
+      tabs: [['home', '⌂', 'Home', 'home'], ['menu', '≡', 'Menu', 'menu'], ['search', '⌕', 'Search', 'search_typing'], ['saved', '⌑', 'Saved', 'lookbook'], ['bag', '▭', 'Bag (' + s.bagQty + ')', 'bag']].map(function (t) {
+        var on = tabMap[s.flow] === t[0], fg = dark ? (on ? '#FFFFFF' : '#9CA3AF') : (on ? '#111111' : '#6B6B6B');
+        return { icon: t[1], label: t[2], c: fg, w: on ? '700' : '500', go: go(t[3]) }; }),
+      // home
+      dept: dept,
+      depts: ['woman', 'man', 'kids', 'sale'].map(function (k) { var on = s.dept === k; return { label: D[k].label, pressed: String(on), bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#111111' : (k === 'sale' ? '#FACC15' : '#FFFFFF'),
+        pick: function () { if (self.state.dept === k) self.setState({ flow: 'lookbook' }); else self.setState({ dept: k }); } }; }),
+      // menu
+      menuCats: [['JACKETS & OUTERWEAR', 'Coats & Jackets'], ['COATS & TRENCH', 'Coats & Jackets'], ['BLAZERS & SUITS', 'Blazers & Suits'], ['SHIRTS & OVERSHIRTS', 'Tops & Knitwear'], ['TROUSERS & JEANS', 'Trousers & Jeans'], ['KNITWEAR & SWEATERS', 'Tops & Knitwear'], ['HOODIES & SWEATSHIRTS', '(42)']].map(function (c) { return { label: c[0], sub: c[1] }; }),
+      edits: s.edits, editsExpanded: String(s.edits), editsChev: s.edits ? '⌄' : '›', toggleEdits: function () { self.setState({ edits: !self.state.edits }); },
+      // lookbook
+      lookCards: [['EMBROIDERED CROPPED JACKET', '$129.00', '#6E5E4E', '#111111', '#8C6239'], ['OVERSIZED TWEED COAT', '$149.00', '#A08C70', '#3D2B1F', '#1B2838'], ['SATIN HALTER DRESS', '$99.00', '#2F5D4A', '#2F5D4A', '#111111'], ['PADDED SILK SCARF JACKET', '$139.00', '#2B2B2E', '#111111', '#4A3728']].map(function (c) { return { name: c[0], price: c[1], tone: c[2], c1: c[3], c2: c[4] }; }),
+      quickAdd: function () { self.setState({ flow: 'bag', bagQty: self.state.bagQty + 1 }); },
+      // search
+      query: s.query, queryUpper: (s.query || 'bead').toUpperCase(),
+      typeQuery: function (e) { self.setState({ query: e.target.value }); }, clearQuery: function () { self.setState({ query: '' }); },
+      suggest: suggest,
+      keys1: ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'], keys2: ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+      results: results, resultCount: results.length,
+      toggleSort: function () { self.setState({ sortLow: !self.state.sortLow }); }, sortLabel: s.sortLow ? 'PRICE ↑' : 'SORT',
+      // filter
+      cats: catNames.map(function (c) { var on = !!s.cats[c]; return { label: c, on: on, toggle: function () { var o = Object.assign({}, self.state.cats); o[c] = !o[c]; self.setState({ cats: o }); } }; }),
+      chips: selCats.map(function (c) { return { label: c, remove: function () { var o = Object.assign({}, self.state.cats); o[c] = false; self.setState({ cats: o }); } }; }),
+      noCats: !selCats.length, filterCount: fcount, clearCats: function () { self.setState({ cats: {} }); },
+      // pdp
+      pdpTone: colorsData[s.color][1] === '#111111' ? '#2B2B2B' : colorsData[s.color][1], colorName: colorsData[s.color][0].toUpperCase(),
+      colors: colorsData.map(function (c, i) { var on = s.color === i; return { name: c[0], hex: c[1], pressed: String(on), ring: on ? '#111111' : '#D4D4D4', pick: function () { self.setState({ color: i }); } }; }),
+      zoomW: String(Math.round(70 * s.zoom)), zoomH: String(Math.round(130 * s.zoom)),
+      zoomIn: function () { self.setState({ zoom: Math.min(2, self.state.zoom + 0.25) }); }, zoomOut: function () { self.setState({ zoom: Math.max(0.75, self.state.zoom - 0.25) }); },
+      sizes: ['S', 'M', 'L', 'XL'].map(function (z) { var on = s.size === z; return { label: z, pressed: String(on), bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', bd: on ? '#111111' : '#D4D4D4', pick: function () { self.setState({ size: z }); } }; }),
+      size: s.size,
+      addToBag: function () { self.setState({ flow: 'bag', bagPid: 'coat', bagSize: self.state.size === 'XL' ? 'L' : self.state.size, bagQty: 1 }); },
+      accordion: [['DESCRIPTION', 'Coat made of a wool blend fabric. High neck collar and long sleeves. Front welt pockets. Matching interior lining. Back vent at the center hem. Front button fastening.'], ['COLOR', 'Taupe grey · Onyx black · Midnight navy.'], ['COMPOSITION', 'Outer shell: 75% wool, 25% polyamide. Lining: 100% viscose.'], ['MEASUREMENTS', 'Model is 188 cm and wears size L.']].map(function (a, i) {
+        var open = s.acc === i; return { label: a[0], body: a[1], open: open, expanded: String(open), chev: open ? '⌃' : '⌄', toggle: function () { self.setState({ acc: self.state.acc === i ? -1 : i }); } }; }),
+      // bag
+      bagName: bagName, bagTone: bagTone, bagSize: s.bagSize, bagQty: s.bagQty, bagPrice: '$' + unit + '.00', bagTotal: '$' + (unit * s.bagQty) + '.00',
+      lowStock: s.bagSize === 'L',
+      changeBagSize: function (e) { self.setState({ bagSize: e.target.value }); },
+      inc: function () { self.setState({ bagQty: Math.min(9, self.state.bagQty + 1) }); }, dec: function () { self.setState({ bagQty: Math.max(1, self.state.bagQty - 1) }); },
+      // payment
+      cancelled: s.cancelled, paid: !s.cancelled, paidToggleLabel: s.cancelled ? 'Cancelled view' : 'Success view',
+      togglePaid: function () { self.setState({ cancelled: !self.state.cancelled }); },
+      // cookie
+      granular: s.granular, granularLabel: s.granular ? 'HIDE COOKIE PREFERENCES ⌃' : 'CUSTOMIZE COOKIE PREFERENCES ›',
+      toggleGranular: function () { self.setState({ granular: !self.state.granular }); },
+      cookieRows: [['Strictly necessary', null, true], ['Functional', 'cFunc', false], ['Analytics', 'cAna', false]].map(function (r) {
+        var on = r[2] || !!s[r[1]]; return { label: r[0], locked: r[2], checked: String(on), track: on ? (r[2] ? '#6B7280' : '#16A34A') : '#3F3F46', justify: on ? 'flex-end' : 'flex-start',
+          toggle: function () { if (!r[1]) return; var u = {}; u[r[1]] = !self.state[r[1]]; self.setState(u); } }; }),
+      // account
+      authTabs: [['login', 'LOG IN'], ['register', 'REGISTER']].map(function (t) { var on = s.tab === t[0]; return { label: t[1], pressed: String(on), bd: on ? '#FFFFFF' : 'transparent', fg: on ? '#FFFFFF' : '#8A8A8A', pick: function () { self.setState({ tab: t[0] }); } }; }),
+      isRegister: s.tab === 'register', authCta: s.tab === 'register' ? 'CREATE ACCOUNT' : 'CONTINUE TO SIGN IN',
+      email: s.email, typeEmail: function (e) { self.setState({ email: e.target.value }); }, emailOk: emailOk,
+      emailBd: emailOk ? '#16A34A' : (s.email ? '#DC2626' : '#444444'),
+      emailMsg: emailOk ? '✓ Email format verified instantly' : (s.email ? 'Please check the email, e.g. name@example.com' : 'Example: name@example.com'),
+      emailMsgColor: emailOk ? '#4ADE80' : (s.email ? '#F87171' : '#A3A3A3'),
+      pw: s.pw, typePw: function (e) { self.setState({ pw: e.target.value }); }, strength: ['—', 'Weak', 'Medium', 'Strong'][score],
+      bar1: score >= 1 ? barC : '#3F3F46', bar2: score >= 2 ? barC : '#3F3F46', bar3: score >= 3 ? barC : '#3F3F46',
+      // returns
+      rsteps: ['1. Items', '2. Reason', '3. Drop-off', '4. QR Code'].map(function (l, i) { var n = i + 1, on = s.rstep === n, done = n < s.rstep; return { label: (done ? '✓ ' : '') + l, pressed: String(on), bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#111111' : (done ? '#4ADE80' : '#8A8A8A'), go: function () { self.setState({ rstep: n }); } }; }),
+      r1: s.rstep === 1, r2: s.rstep === 2, r3: s.rstep === 3, r4: s.rstep === 4,
+      reasons: ['Too big', 'Too small', 'Not as expected', 'Changed my mind'].map(function (l, i) { var on = s.reason === i; return { label: l, pressed: String(on), bd: on ? '#16A34A' : '#333333', pick: function () { self.setState({ reason: i }); } }; }),
+      stores: stores.map(function (x, i) { var on = s.store === i; return { name: x[0], addr: x[1], dist: x[2], pressed: String(on), bd: on ? '#16A34A' : '#333333', pick: function () { self.setState({ store: i }); } }; }),
+      storeName: st[0], storeAddr: st[1], storeDist: st[2],
+      rNext: function () { if (self.state.rstep < 4) self.setState({ rstep: self.state.rstep + 1 }); else self.setState({ flow: 'home', rstep: 3 }); },
+      rBack: function () { if (self.state.rstep > 1) self.setState({ rstep: self.state.rstep - 1 }); else self.setState({ flow: 'account' }); },
+      rNextLabel: ['', 'NEXT: REASON (STEP 2) →', 'NEXT: DROP-OFF (STEP 3) →', 'GENERATE RETURN QR CODE (STEP 4) →', 'DONE · BACK TO HOME'][s.rstep],
+      rBackLabel: ['', '‹ BACK TO ACCOUNT', '‹ BACK TO ITEMS (STEP 1)', '‹ BACK TO REASON (STEP 2)', '‹ BACK TO DROP-OFF (STEP 3)'][s.rstep]
+    };
+  }
+}
+</script>
+</body>
+</html>
