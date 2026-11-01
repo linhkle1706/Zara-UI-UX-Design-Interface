@@ -5,6 +5,7 @@ Student concept · Master BIS · Designing User Interfaces. Product photos are p
 | File | What it is |
 |---|---|
 | `feedback/index.html` | **Main page for testers**: 13 flows, BEFORE vs AFTER phones (mirrored), questions under each numbered function (old score, new score, preferred version), "Your final choice" at the end, and a live **Results** tab |
+| `prototype_with_feedback.html` | Same file as `feedback/index.html` (the name used in the team folder) |
 | `project/Main.dc.html` | Canvas board: the same 13-flow prototype without questions (for presenting) |
 | `project/Questions.dc.html` | Canvas board: the question steps, the 17 tested functions and the result rules |
 | `project/canvas.json` | Canvas settings |
