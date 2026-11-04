@@ -22,3 +22,16 @@ Not affiliated with Zara / Inditex. Product names, prices and images are placeho
 
 Open the Claude Design canvas → press **Play** on each phone → testers leave **comments** on any screen.
 Share the canvas from its **Share** menu so testers can open the link.
+
+## Live prototype app (`prototype-app/`)
+
+The team's interactive dual-phone prototype (React + Vite), with the
+Evaluation fixes:
+- each feature in Evaluation shows the old and new phone inside its card (no "View on Phone")
+- Evaluation remembers the open feature when you come back
+- Zoom changes the real page size (50–100%) and also sizes the phones in Evaluation
+- Evaluation is one vertical list; tap a feature to open it
+
+Run locally: `cd prototype-app && npm ci && npm run dev`.
+Deploy on Vercel: import this repo; `vercel.json` at the root builds `prototype-app/`
+(branch `assistant/zara-prototype`).

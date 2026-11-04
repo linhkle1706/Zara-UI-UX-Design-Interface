@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0c0d0e;
+    color: #f3f4f6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Custom scrollbars inside device screen */
+.device-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.device-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.device-scroll::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.4);
+  border-radius: 4px;
+}
+
+.device-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.7);
+}
+
+/* Hide scrollbar for category tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Zara Logo Didone Styling */
+.zara-logo {
+  font-family: 'Playfair Display', 'Didot', 'Bodoni MT', serif;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  transform: scaleY(1.3);
+  display: inline-block;
+}
+
+/* Apple iOS UIKit Fluid Screen & Navigation Transitions */
+@keyframes iosScreenEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.985) translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-screen-fade {
+  animation: iosScreenEnter 0.28s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  will-change: opacity, transform;
+}
+
+/* Apple Tactile Micro-Interactions */
+.apple-press {
+  transition: transform 0.16s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.16s ease;
+  user-select: none;
+}
+.apple-press:active {
+  transform: scale(0.965);
+  opacity: 0.9;
+}
+
+/* Dynamic Island Live Activity Expansion Animation (Centered Apple HIG Spring) */
+@keyframes islandExpand {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  40% {
+    transform: scale(1.03);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.animate-island-live {
+  animation: islandExpand 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, box-shadow;
+}
+
+/* Garment Smooth Image Cross-fade */
+.garment-crossfade {
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s ease-out;
+}
+
+/* Apple-Grade Garment Color Cross-Dissolve */
+@keyframes garmentColorDissolve {
+  0% {
+    opacity: 0;
+    filter: blur(1.5px) saturate(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px) saturate(1);
+  }
+}
+
+.animate-garment-dissolve {
+  animation: garmentColorDissolve 0.42s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  will-change: opacity, filter;
+}
+
+@keyframes colorNameFade {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-color-text {
+  animation: colorNameFade 0.25s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes swatchSelectPulse {
+  0% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-swatch-select {
+  animation: swatchSelectPulse 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
