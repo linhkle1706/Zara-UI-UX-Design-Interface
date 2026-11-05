@@ -27,7 +27,7 @@ export const EvaluationResultsView = () => {
     sheetEnabled,
   } = useFlow();
 
-  // Load everyone's answers from the shared Google Sheet when Results opens
+  // Load everyone's answers from shared storage when Results opens
   useEffect(() => {
     if (sheetEnabled) refreshSharedResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,15 +120,15 @@ export const EvaluationResultsView = () => {
         <div className="flex flex-col gap-1">
           <span className="font-bold text-sm">
             {!sheetEnabled && 'Showing results saved in this browser only'}
-            {sheetEnabled && sharedStatus === 'loading' && 'Loading everyone’s results from the shared Google Sheet…'}
+            {sheetEnabled && sharedStatus === 'loading' && 'Loading everyone’s results…'}
             {sheetEnabled && sharedStatus === 'ok' && `Shared results from all testers: ${sharedResponses ? sharedResponses.length : 0} recorded`}
-            {sheetEnabled && sharedStatus === 'error' && 'Could not reach the shared Google Sheet. Showing this browser only.'}
-            {sheetEnabled && sharedStatus === 'idle' && 'Shared Google Sheet is connected.'}
+            {sheetEnabled && sharedStatus === 'error' && 'Shared storage is not ready yet, so only answers from this browser are shown.'}
+            {sheetEnabled && sharedStatus === 'idle' && 'Shared storage is connected.'}
           </span>
-          {submitStatus === 'sent' && <span>✓ Your evaluation was sent to the shared sheet.</span>}
+          {submitStatus === 'sent' && <span>✓ Your evaluation was saved to the shared results.</span>}
           {submitStatus === 'sending' && <span>Sending your evaluation…</span>}
-          {submitStatus === 'local' && <span>Your evaluation is saved in this browser. Shared saving is not set up yet.</span>}
-          {submitStatus === 'error' && <span>Your evaluation could not be sent. It is still saved in this browser; please submit again later.</span>}
+          {submitStatus === 'local' && <span>Your evaluation is saved in this browser.</span>}
+          {submitStatus === 'error' && <span>Your evaluation could not be saved to the shared results. It is still saved in this browser; please press Submit again later.</span>}
         </div>
         {sheetEnabled && (
           <button

@@ -1,4 +1,3 @@
-// Shared saving (Google Sheet via Apps Script web app).
-// Set it in Vercel: Settings -> Environment Variables -> VITE_SHEET_URL = <web app URL>
-// or paste the URL between the quotes below.
-export const SHEET_URL = (import.meta.env.VITE_SHEET_URL || '').trim();
+// Shared results endpoint (Vercel function at /api/results, stored in Vercel Blob).
+// Override with VITE_RESULTS_URL if the results live somewhere else.
+export const RESULTS_URL = (import.meta.env.VITE_RESULTS_URL || '/api/results').trim();

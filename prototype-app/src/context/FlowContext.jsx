@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useRef } from 'react';
 import { PRODUCTS } from '../data/products';
 import { EVALUATION_ITEMS, EVALUATION_MAP, EVALUATION_GROUPS, SAMPLE_TESTER_RESPONSES } from '../data/evaluationQuestions';
-import { SHEET_URL } from '../config';
+import { RESULTS_URL } from '../config';
 
 export const FLOWS = [
   // Part 1: Home & Menu (Tran Thi Bao Khuong · 20225027)
@@ -339,31 +339,30 @@ export const FlowProvider = ({ children }) => {
 
   // Shared results (Google Sheet). null = not loaded / not set up
   const [sharedResponses, setSharedResponses] = useState(null);
-  const [sharedStatus, setSharedStatus] = useState(SHEET_URL ? 'idle' : 'off'); // off | idle | loading | ok | error
+  const [sharedStatus, setSharedStatus] = useState('idle'); // idle | loading | ok | error
   const [submitStatus, setSubmitStatus] = useState(null); // null | sending | sent | local | error
   const [submittedSignature, setSubmittedSignature] = useState(() => {
     try { return localStorage.getItem('zara_submitted_sig_v2') || ''; } catch { return ''; }
   });
 
   const refreshSharedResults = async () => {
-    if (!SHEET_URL) return;
     setSharedStatus('loading');
     try {
-      const res = await fetch(SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 't=' + Date.now());
+      const res = await fetch(RESULTS_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error('status ' + res.status);
       const json = await res.json();
       const list = Array.isArray(json?.responses) ? json.responses.filter(r => r && r.ratings && typeof r.ratings === 'object') : [];
       setSharedResponses(list);
       setSharedStatus('ok');
     } catch (e) {
+      setSharedResponses(null);
       setSharedStatus('error');
     }
   };
 
-  const sendToSheet = async (response) => {
-    if (!SHEET_URL) return false;
-    // text/plain + no-cors: a "simple" request that Apps Script accepts without a CORS preflight
-    await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(response) });
-    return true;
+  const sendToShared = async (response) => {
+    const res = await fetch(RESULTS_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(response) });
+    if (!res.ok) throw new Error('status ' + res.status);
   };
 
   const setFeatureRating = (featureId, field, value) => {
@@ -407,12 +406,11 @@ export const FlowProvider = ({ children }) => {
       localStorage.setItem('zara_submitted_sig_v2', sig);
     } catch (e) {}
     setAppViewMode('results');
-    if (!SHEET_URL) { setSubmitStatus('local'); return; }
     setSubmitStatus('sending');
     try {
-      await sendToSheet(newResponse);
+      await sendToShared(newResponse);
       setSubmitStatus('sent');
-      setTimeout(refreshSharedResults, 1500);
+      refreshSharedResults();
     } catch (e) {
       setSubmitStatus('error');
     }
@@ -436,7 +434,7 @@ export const FlowProvider = ({ children }) => {
   };
 
   const getEvaluationAggregates = () => {
-    const shared = SHEET_URL && sharedResponses !== null;
+    const shared = sharedResponses !== null;
     const dataset = shared ? [...sharedResponses] : [...testerResponses];
     // count the answers being filled in now only if they were not submitted yet
     const hasCurrent = !shared && Object.keys(surveyRatings).length > 0 && JSON.stringify(surveyRatings) !== submittedSignature;
@@ -1120,7 +1118,7 @@ export const FlowProvider = ({ children }) => {
         sharedStatus,
         submitStatus,
         refreshSharedResults,
-        sheetEnabled: !!SHEET_URL,
+        sheetEnabled: true,
         getEvaluationAggregates,
         exportCSV,
         EVALUATION_GROUPS,
