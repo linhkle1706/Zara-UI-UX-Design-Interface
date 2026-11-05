@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFlow } from '../../context/FlowContext';
 import {
   Download,
@@ -20,7 +20,18 @@ export const EvaluationResultsView = () => {
     exportCSV,
     resetToSampleData,
     setAppViewMode,
+    sharedResponses,
+    sharedStatus,
+    submitStatus,
+    refreshSharedResults,
+    sheetEnabled,
   } = useFlow();
+
+  // Load everyone's answers from the shared Google Sheet when Results opens
+  useEffect(() => {
+    if (sheetEnabled) refreshSharedResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [copyFeedback, setCopyFeedback] = useState(false);
   const [filterVerdict, setFilterVerdict] = useState('all'); // 'all' | 'success' | 'over' | 'weak' | 'mixed'
@@ -98,6 +109,36 @@ export const EvaluationResultsView = () => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Where the numbers come from */}
+      <div className={`rounded-2xl border p-4 flex flex-wrap items-center justify-between gap-3 text-xs ${
+        sheetEnabled && sharedStatus === 'ok' ? 'bg-emerald-950/30 border-emerald-800/60 text-emerald-200'
+          : sheetEnabled && sharedStatus === 'error' ? 'bg-red-950/30 border-red-900/60 text-red-200'
+          : 'bg-amber-950/30 border-amber-900/60 text-amber-200'
+      }`}>
+        <div className="flex flex-col gap-1">
+          <span className="font-bold text-sm">
+            {!sheetEnabled && 'Showing results saved in this browser only'}
+            {sheetEnabled && sharedStatus === 'loading' && 'Loading everyone’s results from the shared Google Sheet…'}
+            {sheetEnabled && sharedStatus === 'ok' && `Shared results from all testers: ${sharedResponses ? sharedResponses.length : 0} recorded`}
+            {sheetEnabled && sharedStatus === 'error' && 'Could not reach the shared Google Sheet. Showing this browser only.'}
+            {sheetEnabled && sharedStatus === 'idle' && 'Shared Google Sheet is connected.'}
+          </span>
+          {submitStatus === 'sent' && <span>✓ Your evaluation was sent to the shared sheet.</span>}
+          {submitStatus === 'sending' && <span>Sending your evaluation…</span>}
+          {submitStatus === 'local' && <span>Your evaluation is saved in this browser. Shared saving is not set up yet.</span>}
+          {submitStatus === 'error' && <span>Your evaluation could not be sent. It is still saved in this browser; please submit again later.</span>}
+        </div>
+        {sheetEnabled && (
+          <button
+            onClick={refreshSharedResults}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-neutral-900/80 hover:bg-neutral-800 text-white border border-neutral-700 font-semibold cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Refresh results</span>
+          </button>
+        )}
       </div>
 
       {/* KPI Summary Cards */}

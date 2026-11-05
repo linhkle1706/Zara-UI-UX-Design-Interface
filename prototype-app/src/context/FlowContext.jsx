@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useRef } from 'react';
 import { PRODUCTS } from '../data/products';
 import { EVALUATION_ITEMS, EVALUATION_MAP, EVALUATION_GROUPS, SAMPLE_TESTER_RESPONSES } from '../data/evaluationQuestions';
+import { SHEET_URL } from '../config';
 
 export const FLOWS = [
   // Part 1: Home & Menu (Tran Thi Bao Khuong · 20225027)
@@ -336,6 +337,35 @@ export const FlowProvider = ({ children }) => {
     }
   });
 
+  // Shared results (Google Sheet). null = not loaded / not set up
+  const [sharedResponses, setSharedResponses] = useState(null);
+  const [sharedStatus, setSharedStatus] = useState(SHEET_URL ? 'idle' : 'off'); // off | idle | loading | ok | error
+  const [submitStatus, setSubmitStatus] = useState(null); // null | sending | sent | local | error
+  const [submittedSignature, setSubmittedSignature] = useState(() => {
+    try { return localStorage.getItem('zara_submitted_sig_v2') || ''; } catch { return ''; }
+  });
+
+  const refreshSharedResults = async () => {
+    if (!SHEET_URL) return;
+    setSharedStatus('loading');
+    try {
+      const res = await fetch(SHEET_URL + (SHEET_URL.includes('?') ? '&' : '?') + 't=' + Date.now());
+      const json = await res.json();
+      const list = Array.isArray(json?.responses) ? json.responses.filter(r => r && r.ratings && typeof r.ratings === 'object') : [];
+      setSharedResponses(list);
+      setSharedStatus('ok');
+    } catch (e) {
+      setSharedStatus('error');
+    }
+  };
+
+  const sendToSheet = async (response) => {
+    if (!SHEET_URL) return false;
+    // text/plain + no-cors: a "simple" request that Apps Script accepts without a CORS preflight
+    await fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(response) });
+    return true;
+  };
+
   const setFeatureRating = (featureId, field, value) => {
     setSurveyRatings(prev => {
       const updated = {
@@ -352,19 +382,40 @@ export const FlowProvider = ({ children }) => {
     });
   };
 
-  const submitCurrentUserSurvey = () => {
+  const getTesterId = () => {
+    try {
+      let id = localStorage.getItem('zara_tester_id_v2');
+      if (!id) { id = `tester_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`; localStorage.setItem('zara_tester_id_v2', id); }
+      return id;
+    } catch { return `tester_${Date.now().toString(36)}`; }
+  };
+
+  const submitCurrentUserSurvey = async () => {
     const newResponse = {
-      testerId: `tester_${Date.now().toString(36)}`,
+      testerId: getTesterId(),
       overall: 5,
       ratings: surveyRatings,
       submittedAt: new Date().toISOString()
     };
-    const updated = [newResponse, ...testerResponses];
+    // same tester submitting again replaces their earlier answer
+    const updated = [newResponse, ...testerResponses.filter(r => r.testerId !== newResponse.testerId)];
     setTesterResponses(updated);
+    const sig = JSON.stringify(surveyRatings);
+    setSubmittedSignature(sig);
     try {
       localStorage.setItem('zara_all_tester_responses_v2', JSON.stringify(updated));
+      localStorage.setItem('zara_submitted_sig_v2', sig);
     } catch (e) {}
     setAppViewMode('results');
+    if (!SHEET_URL) { setSubmitStatus('local'); return; }
+    setSubmitStatus('sending');
+    try {
+      await sendToSheet(newResponse);
+      setSubmitStatus('sent');
+      setTimeout(refreshSharedResults, 1500);
+    } catch (e) {
+      setSubmitStatus('error');
+    }
   };
 
   const resetSurveyRatings = () => {
@@ -385,8 +436,10 @@ export const FlowProvider = ({ children }) => {
   };
 
   const getEvaluationAggregates = () => {
-    const dataset = [...testerResponses];
-    const hasCurrent = Object.keys(surveyRatings).length > 0;
+    const shared = SHEET_URL && sharedResponses !== null;
+    const dataset = shared ? [...sharedResponses] : [...testerResponses];
+    // count the answers being filled in now only if they were not submitted yet
+    const hasCurrent = !shared && Object.keys(surveyRatings).length > 0 && JSON.stringify(surveyRatings) !== submittedSignature;
     const finalSet = hasCurrent ? [{ testerId: 'current_user', ratings: surveyRatings }, ...dataset] : dataset;
 
     const stats = {};
@@ -1063,6 +1116,11 @@ export const FlowProvider = ({ children }) => {
         submitCurrentUserSurvey,
         resetSurveyRatings,
         resetToSampleData,
+        sharedResponses,
+        sharedStatus,
+        submitStatus,
+        refreshSharedResults,
+        sheetEnabled: !!SHEET_URL,
         getEvaluationAggregates,
         exportCSV,
         EVALUATION_GROUPS,
