@@ -1,0 +1,6 @@
+{
+  "installCommand": "if [ -d prototype-app ]; then cd prototype-app; fi; npm ci",
+  "buildCommand": "if [ -d prototype-app ]; then cd prototype-app && npm run build && rm -rf ../dist && mv dist ../dist; else npm run build; fi",
+  "outputDirectory": "dist",
+  "framework": null
+}
