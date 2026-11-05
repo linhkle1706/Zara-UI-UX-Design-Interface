@@ -312,23 +312,27 @@ export const FlowProvider = ({ children }) => {
     } catch {}
   };
 
+  // New data round (v2): forget answers and sample results saved by the old version
+  const OLD_SURVEY_KEYS = ['zara_survey_ratings_v1', 'zara_all_tester_responses_v1'];
+  try { OLD_SURVEY_KEYS.forEach(k => localStorage.removeItem(k)); } catch {}
+
   // Survey Ratings State for Current User
   const [surveyRatings, setSurveyRatings] = useState(() => {
     try {
-      const saved = localStorage.getItem('zara_survey_ratings_v1');
+      const saved = localStorage.getItem('zara_survey_ratings_v2');
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
     }
   });
 
-  // Tester survey pool (Sample responses + Submitted responses)
+  // Tester survey pool: starts empty (no sample testers), only real submissions
   const [testerResponses, setTesterResponses] = useState(() => {
     try {
-      const saved = localStorage.getItem('zara_all_tester_responses_v1');
-      return saved ? JSON.parse(saved) : SAMPLE_TESTER_RESPONSES;
+      const saved = localStorage.getItem('zara_all_tester_responses_v2');
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return SAMPLE_TESTER_RESPONSES;
+      return [];
     }
   });
 
@@ -342,7 +346,7 @@ export const FlowProvider = ({ children }) => {
         }
       };
       try {
-        localStorage.setItem('zara_survey_ratings_v1', JSON.stringify(updated));
+        localStorage.setItem('zara_survey_ratings_v2', JSON.stringify(updated));
       } catch (e) {}
       return updated;
     });
@@ -358,7 +362,7 @@ export const FlowProvider = ({ children }) => {
     const updated = [newResponse, ...testerResponses];
     setTesterResponses(updated);
     try {
-      localStorage.setItem('zara_all_tester_responses_v1', JSON.stringify(updated));
+      localStorage.setItem('zara_all_tester_responses_v2', JSON.stringify(updated));
     } catch (e) {}
     setAppViewMode('results');
   };
@@ -366,14 +370,17 @@ export const FlowProvider = ({ children }) => {
   const resetSurveyRatings = () => {
     setSurveyRatings({});
     try {
-      localStorage.removeItem('zara_survey_ratings_v1');
+      localStorage.removeItem('zara_survey_ratings_v2');
     } catch (e) {}
   };
 
+  // Clear every saved result in this browser (submitted answers + current answers)
   const resetToSampleData = () => {
-    setTesterResponses(SAMPLE_TESTER_RESPONSES);
+    setTesterResponses([]);
+    setSurveyRatings({});
     try {
-      localStorage.setItem('zara_all_tester_responses_v1', JSON.stringify(SAMPLE_TESTER_RESPONSES));
+      localStorage.removeItem('zara_all_tester_responses_v2');
+      localStorage.removeItem('zara_survey_ratings_v2');
     } catch (e) {}
   };
 

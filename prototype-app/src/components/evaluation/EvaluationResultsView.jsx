@@ -189,10 +189,10 @@ export const EvaluationResultsView = () => {
         <button
           onClick={resetToSampleData}
           className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-neutral-200 font-mono transition-colors cursor-pointer"
-          title="Reset pool to original sample testers"
+          title="Delete all results saved in this browser"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          <span>Reset Sample Pool</span>
+          <span>Clear All Results</span>
         </button>
       </div>
 
