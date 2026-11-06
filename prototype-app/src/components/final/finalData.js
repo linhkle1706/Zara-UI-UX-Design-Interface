@@ -36,7 +36,7 @@ export const FEEDBACK = [
     ],
     source: 'Interviews · "one thing to change" + team note (no list of discounted products)',
     problem: 'Sale was only a small chip. There was no page that listed all discounted products.',
-    change: ['Red Sale banner on Home + Sale row at the top of the menu', 'A Sale page with every discounted item, sorted by % off', 'A small sale pop-up once per visit (easy to close)', 'AI tip in Search: "Looking for deals?"'],
+    change: ['Red Sale banner on Home + Sale row at the top of the menu', 'A Sale page with every discounted item, sorted by % off', 'A small sale pop-up once per visit (easy to close)', 'AI tip in Search: "Looking for deals?" → Sale page', '"AI picks for you" on the Sale page: your favourites on sale + similar items'],
     heuristic: '#1 Visibility of system status',
     goto: { screen: 'home' },
   },

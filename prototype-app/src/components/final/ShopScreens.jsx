@@ -235,9 +235,7 @@ export const ListScreen = () => {
   return (
     <div className="bg-white text-neutral-900 min-h-full pb-24">
       <ScreenHeader title={title} sub={`${items.length} products${route.mode === 'sale' ? ' · sorted by biggest discount' : ''}`} />
-      {route.mode === 'sale' && (
-        <div className="px-4 py-2 bg-[#FDECEE] text-[#C8102E] text-[12px] font-medium">Mid‑season sale · prices already reduced · limited stock</div>
-      )}
+      {route.mode === 'sale' && <SaleAiPicks />}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-neutral-100">
         <div className="relative">
           <button type="button" onClick={() => patch({ showFilters: true })} className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-neutral-300 text-[12px] font-medium">
@@ -287,6 +285,44 @@ export const ListScreen = () => {
       )}
       <CompareBar />
       {s.showFilters && <FilterSheet count={items.length} />}
+    </div>
+  );
+};
+
+// Feedback 3 — "AI somehow suggests a way to find sale items": personal picks at the top of the Sale page.
+const SaleAiPicks = () => {
+  const { app } = useFinal();
+  const { s, go } = app;
+  const sale = ALL.filter(p => p.onSale);
+  const favOnSale = sale.filter(p => s.favourites.includes(p.id));
+  const favCats = new Set(s.favourites.map(id => byId(id)?.category).filter(Boolean));
+  const picks = [
+    ...favOnSale,
+    ...sale.filter(p => !favOnSale.includes(p) && p.department === s.dept && favCats.has(p.category)),
+    ...sale.filter(p => !favOnSale.includes(p) && p.department === s.dept),
+  ].filter((p, i, arr) => arr.indexOf(p) === i).slice(0, 3);
+  const save = Math.round(picks.reduce((t, p) => t + (parseFloat((p.originalPrice || p.price).replace('$', '')) - p.priceNum), 0));
+  return (
+    <div className="relative px-3 pt-3 pb-2 bg-[#FDECEE]">
+      <Hotspot n={3} style={{ top: 4, right: 6 }} />
+      <div className="text-[11px] font-semibold text-[#C8102E]">Mid‑season sale · {sale.length} items · up to 50% off</div>
+      <div className="mt-2 rounded-xl bg-white border border-[#2563EB]/30 p-2.5">
+        <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#1E3A8A]"><Sparkles className="w-4 h-4" /> AI picks for you</div>
+        <div className="text-[11px] text-[#1E3A8A]/75 mb-2">
+          {favOnSale.length ? `${favOnSale.length} of your favourites ${favOnSale.length === 1 ? 'is' : 'are'} on sale now` : `Based on your style (${DEPTS.find(d => d.id === s.dept)?.label})`} · save ${save} on these 3
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {picks.map(p => (
+            <button key={p.id} type="button" onClick={() => go({ screen: 'pdp', id: p.id })} className="relative text-left">
+              <img src={p.image} alt={p.name} className="w-full aspect-[3/4] object-cover rounded" />
+              <span className="absolute left-1 top-1 text-[9px] font-bold bg-[#C8102E] text-white px-1 rounded">-{p.discountPercent}%</span>
+              {favOnSale.includes(p) && <span className="absolute right-1 top-1 text-[9px] bg-white/90 text-[#C8102E] px-1 rounded">♥ saved</span>}
+              <Price p={p} />
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="mt-2 text-[11px] text-neutral-600">All sale items below · sorted by biggest discount</div>
     </div>
   );
 };

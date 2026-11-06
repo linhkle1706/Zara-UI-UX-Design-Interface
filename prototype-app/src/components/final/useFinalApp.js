@@ -4,7 +4,7 @@ import { ALL, byId } from './finalData';
 const INITIAL = () => ({
   stack: [{ screen: 'home' }],
   dept: 'woman',
-  favourites: ['wool_coat'],
+  favourites: ['wool_coat', 'beaded_top'],
   bag: [],
   compare: [],
   view: 2,
