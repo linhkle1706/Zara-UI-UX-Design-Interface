@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useRef } from 'react';
+import React, { createContext, useContext, useState, useRef, useEffect } from 'react';
 import { PRODUCTS } from '../data/products';
 import { EVALUATION_ITEMS, EVALUATION_MAP, EVALUATION_GROUPS, SAMPLE_TESTER_RESPONSES } from '../data/evaluationQuestions';
 import { RESULTS_URL } from '../config';
@@ -365,6 +365,30 @@ export const FlowProvider = ({ children }) => {
     if (!res.ok) throw new Error('status ' + res.status);
   };
 
+  const getTesterId = () => {
+    try {
+      let id = localStorage.getItem('zara_tester_id_v2');
+      if (!id) { id = `tester_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`; localStorage.setItem('zara_tester_id_v2', id); }
+      return id;
+    } catch { return `tester_${Date.now().toString(36)}`; }
+  };
+
+  // Auto-save: every change is also sent to the shared results (debounced),
+  // so a tester's answers are recorded even if they never press Submit.
+  const autoSaveTimer = useRef(null);
+  useEffect(() => {
+    const hasComplete = Object.values(surveyRatings).some(r => r && r.o && r.n && r.p);
+    if (!hasComplete) return;
+    clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => {
+      sendToShared({ testerId: getTesterId(), overall: 5, ratings: surveyRatings, submittedAt: new Date().toISOString() })
+        .then(() => setSubmitStatus(prev => (prev === 'sending' ? prev : 'autosaved')))
+        .catch(() => {});
+    }, 2000);
+    return () => clearTimeout(autoSaveTimer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [surveyRatings]);
+
   const setFeatureRating = (featureId, field, value) => {
     setSurveyRatings(prev => {
       const updated = {
@@ -379,14 +403,6 @@ export const FlowProvider = ({ children }) => {
       } catch (e) {}
       return updated;
     });
-  };
-
-  const getTesterId = () => {
-    try {
-      let id = localStorage.getItem('zara_tester_id_v2');
-      if (!id) { id = `tester_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`; localStorage.setItem('zara_tester_id_v2', id); }
-      return id;
-    } catch { return `tester_${Date.now().toString(36)}`; }
   };
 
   const submitCurrentUserSurvey = async () => {

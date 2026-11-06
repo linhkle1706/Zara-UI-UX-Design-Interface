@@ -350,7 +350,7 @@ export const EvaluationSurveyView = () => {
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset My Answers</span>
           </button>
-          <span className="text-xs text-neutral-400 hidden sm:inline">Answers are auto-saved in your browser.</span>
+          <span className="text-xs text-neutral-400 hidden sm:inline">Your answers are saved automatically. Press Submit when you finish.</span>
         </div>
 
         <div className="flex items-center gap-3">

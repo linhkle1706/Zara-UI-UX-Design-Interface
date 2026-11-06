@@ -127,6 +127,7 @@ export const EvaluationResultsView = () => {
           </span>
           {submitStatus === 'sent' && <span>✓ Your evaluation was saved to the shared results.</span>}
           {submitStatus === 'sending' && <span>Sending your evaluation…</span>}
+          {submitStatus === 'autosaved' && <span>✓ Your answers are being saved automatically to the shared results.</span>}
           {submitStatus === 'local' && <span>Your evaluation is saved in this browser.</span>}
           {submitStatus === 'error' && <span>Your evaluation could not be saved to the shared results. It is still saved in this browser; please press Submit again later.</span>}
         </div>

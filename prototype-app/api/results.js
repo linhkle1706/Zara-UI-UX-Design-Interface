@@ -9,8 +9,10 @@ const FEATURES = [
   'bag_edit_size', 'checkout_stepper', 'payment_honesty', 'cookie_consent', 'auth_tabs', 'returns_stepper',
 ];
 const PREFIX = 'evaluation-responses/';
-const ACCESS_ORDER = ['private', 'public']; // works with either kind of Blob store
-let knownAccess = null;
+// Store access ("public" or "private") is set when the Blob store is created.
+// Use BLOB_ACCESS if given, otherwise learn it from the URLs the store returns.
+let knownAccess = ['public', 'private'].includes(process.env.BLOB_ACCESS) ? process.env.BLOB_ACCESS : null;
+const accessFromUrl = (url) => (/\.private\.blob\./.test(url) ? 'private' : /\.public\.blob\./.test(url) ? 'public' : null);
 
 const score = (v) => { const n = Number(v); return n >= 1 && n <= 5 ? Math.round(n) : undefined; };
 
@@ -32,22 +34,30 @@ export function cleanResponse(body) {
   return { testerId, ratings, submittedAt: new Date(Number.isFinite(at) ? at : Date.now()).toISOString() };
 }
 
-async function withAccess(fn) {
-  const order = knownAccess ? [knownAccess] : ACCESS_ORDER;
+async function putJson(pathname, data) {
+  const order = knownAccess ? [knownAccess] : ['public', 'private'];
   let lastErr;
   for (const access of order) {
-    try { const out = await fn(access); knownAccess = access; return out; }
-    catch (e) { lastErr = e; if (!/access/i.test(String(e && (e.name + e.message)))) throw e; }
+    try {
+      const out = await put(pathname, data, { access, addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json' });
+      knownAccess = accessFromUrl(out && out.url) || access;
+      return out;
+    } catch (e) { lastErr = e; }
   }
   throw lastErr;
 }
 
-async function readBlob(pathname) {
-  return withAccess(async (access) => {
-    const res = await get(pathname, { access, useCache: false });
-    if (!res || !res.stream) return null;
-    return JSON.parse(await new Response(res.stream).text());
-  });
+// Read a saved response by the exact URL the store listed (its URL already says public or private).
+async function readBlob(blob) {
+  const access = accessFromUrl(blob.url) || knownAccess || 'public';
+  if (access === 'public') {
+    const r = await fetch(blob.url + (blob.url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return null;
+    return r.json();
+  }
+  const res = await get(blob.url, { access: 'private', useCache: false });
+  if (!res || !res.stream) return null;
+  return JSON.parse(await new Response(res.stream).text());
 }
 
 export default async function handler(req, res) {
@@ -61,9 +71,7 @@ export default async function handler(req, res) {
       if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = null; } }
       const clean = cleanResponse(body);
       if (!clean) return res.status(400).json({ error: 'invalid_response' });
-      await withAccess((access) => put(`${PREFIX}${clean.testerId}.json`, JSON.stringify(clean), {
-        access, addRandomSuffix: false, allowOverwrite: true, contentType: 'application/json',
-      }));
+      await putJson(`${PREFIX}${clean.testerId}.json`, JSON.stringify(clean));
       return res.status(200).json({ ok: true });
     }
     if (req.method === 'GET') {
@@ -72,9 +80,10 @@ export default async function handler(req, res) {
       do {
         const page = await list({ prefix: PREFIX, cursor, limit: 1000 });
         blobs.push(...page.blobs);
+        if (!knownAccess && page.blobs[0]) knownAccess = accessFromUrl(page.blobs[0].url);
         cursor = page.hasMore ? page.cursor : undefined;
       } while (cursor && blobs.length < 5000);
-      const responses = (await Promise.all(blobs.map((b) => readBlob(b.pathname).catch(() => null))))
+      const responses = (await Promise.all(blobs.map((b) => readBlob(b).catch(() => null))))
         .map(cleanResponse).filter(Boolean)
         .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
       return res.status(200).json({ count: responses.length, responses });
@@ -82,6 +91,7 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'method_not_allowed' });
   } catch (e) {
-    return res.status(500).json({ error: 'storage_error' });
+    console.error('results api error:', e && e.message);
+    return res.status(500).json({ error: 'storage_error', detail: String((e && e.message) || e).slice(0, 200) });
   }
 }
