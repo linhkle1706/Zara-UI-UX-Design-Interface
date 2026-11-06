@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFlow, FLOWS, ZOOM_OPTIONS } from '../context/FlowContext';
-import { Smartphone, RefreshCw, Eye, EyeOff, ZoomIn, Layers, Sparkles, Edit3, BarChart2 } from 'lucide-react';
+import { Smartphone, RefreshCw, Eye, EyeOff, ZoomIn, Layers, Sparkles, Edit3, BarChart2, Star } from 'lucide-react';
 
 export const TopNavBar = () => {
   const {
@@ -70,6 +70,18 @@ export const TopNavBar = () => {
             </button>
 
             <button
+              onClick={() => setAppViewMode('final')}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+                appViewMode === 'final'
+                  ? 'bg-[#2563EB] text-white shadow-md font-bold'
+                  : 'text-neutral-400 hover:text-white font-medium'
+              }`}
+            >
+              <Star className="w-3.5 h-3.5" />
+              <span>Final Prototype</span>
+            </button>
+
+            <button
               onClick={() => setAppViewMode('survey')}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
                 appViewMode === 'survey'
@@ -94,8 +106,8 @@ export const TopNavBar = () => {
             </button>
           </div>
 
-          {/* Action Toggles */}
-          <div className="flex items-center gap-2 text-xs">
+          {/* Action Toggles (hidden in Final Prototype, which has its own controls) */}
+          <div className={`flex items-center gap-2 text-xs ${appViewMode === 'final' ? 'hidden' : ''}`}>
             {/* Device Switcher */}
             <div className="flex items-center bg-neutral-800/80 rounded-lg p-0.5 border border-neutral-700">
               <button

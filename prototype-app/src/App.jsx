@@ -5,6 +5,7 @@ import { DeviceFrame } from './components/DeviceFrame';
 import { UXInspectorModal } from './components/UXInspectorModal';
 import { EvaluationSurveyView } from './components/evaluation/EvaluationSurveyView';
 import { EvaluationResultsView } from './components/evaluation/EvaluationResultsView';
+import { FinalPrototypeView } from './components/final/FinalPrototypeView';
 
 import { getScreenComponent } from './screens';
 
@@ -115,6 +116,9 @@ const MainContent = () => {
   }
   if (appViewMode === 'results') {
     return <EvaluationResultsView />;
+  }
+  if (appViewMode === 'final') {
+    return <FinalPrototypeView />;
   }
   return <PrototypeCanvas />;
 };

@@ -299,7 +299,16 @@ export const FlowProvider = ({ children }) => {
   });
 
   // App View Modes: 'prototype' | 'survey' | 'results'
-  const [appViewMode, setAppViewMode] = useState('prototype');
+  const [appViewMode, setAppViewModeState] = useState(() => {
+    try { return window.location.hash === '#final' ? 'final' : 'prototype'; } catch { return 'prototype'; }
+  });
+  const setAppViewMode = (mode) => {
+    setAppViewModeState(mode);
+    try {
+      const url = window.location.pathname + window.location.search + (mode === 'final' ? '#final' : '');
+      window.history.replaceState(null, '', url);
+    } catch { /* ignore */ }
+  };
 
   // Evaluation: which item is open (kept when the user leaves and comes back)
   const [evalOpenItemId, setEvalOpenItemIdState] = useState(() => {
